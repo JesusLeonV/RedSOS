@@ -7,33 +7,49 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btnbn"
+        android:layout_width="410dp"
+        android:layout_height="90dp"
+        android:text="Estoy Bien"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="639dp" />
+
     <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="392dp"
-        android:layout_height="405dp"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="125dp" />
+        android:id="@+id/map"
+        android:layout_width="324dp"
+        android:layout_height="298dp"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="160dp" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="511dp"
-        android:layout_height="170dp"
+        android:id="@+id/btnayuda"
+        android:layout_width="410dp"
+        android:layout_height="90dp"
         android:text="Pedir Ayuda"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="686dp" />
-
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="512dp"
-        android:layout_height="91dp"
+        app:iconTint="@color/black"
+        app:rippleColor="#E00B0B"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="545dp" />
+        tools:layout_editor_absoluteY="549dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="58dp"
-        android:layout_height="543dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
+    <TextView
+        android:id="@+id/ubi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ubicacion"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <TextView
+        android:id="@+id/estado"
+        android:layout_width="167dp"
+        android:layout_height="23dp"
+        android:text="¿Te encuentras bien?"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="526dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

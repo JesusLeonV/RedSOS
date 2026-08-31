@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".informacion">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="175dp"
+        android:layout_height="19dp"
+        android:text="Informacion Personal"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="123dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/intnmb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:hint="Nombre Completo"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="158dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/intcelular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:hint="celular"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="268dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/intcorreo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:hint="Correo"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="320dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/intrut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:hint="Rut"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="213dp" />
+
+    <Button
+        android:id="@+id/btninformacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar Información"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="384dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
