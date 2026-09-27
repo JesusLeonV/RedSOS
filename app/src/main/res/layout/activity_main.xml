@@ -1,55 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/neutral_light"
+    android:fillViewport="true">
 
-    <Button
-        android:id="@+id/btnbn"
-        android:layout_width="410dp"
-        android:layout_height="90dp"
-        android:text="Estoy Bien"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="639dp" />
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
-        android:layout_width="324dp"
-        android:layout_height="298dp"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="160dp" />
-
-    <Button
-        android:id="@+id/btnayuda"
-        android:layout_width="410dp"
-        android:layout_height="90dp"
-        android:text="Pedir Ayuda"
-        app:iconTint="@color/black"
-        app:rippleColor="#E00B0B"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="549dp" />
-
-    <TextView
-        android:id="@+id/ubi"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ubicacion"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="128dp" />
+        android:padding="20dp"
+        tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/estado"
-        android:layout_width="167dp"
-        android:layout_height="23dp"
-        android:text="¿Te encuentras bien?"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="526dp" />
+        <!-- Título de la app -->
+        <TextView
+            android:id="@+id/tituloApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RED SOS"
+            android:textColor="@color/status_red"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Etiqueta de Ubicación -->
+        <TextView
+            android:id="@+id/ubi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UBICACIÓN ACTUAL"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/tituloApp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <!-- Tarjeta del Mapa -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMapa"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:strokeColor="@color/neutral_border"
+            app:strokeWidth="1dp"
+            app:layout_constraintTop_toBottomOf="@id/ubi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp">
+
+            <View
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/neutral_border" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="MAPA"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Coordenadas -->
+        <TextView
+            android:id="@+id/coordenadas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-18.4783, -70.3126"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@id/cardMapa"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <!-- Pregunta de estado -->
+        <TextView
+            android:id="@+id/estado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿TE ENCUENTRAS BIEN?"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/coordenadas"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" />
+
+        <!-- Botón Pedir Ayuda (rojo de emergencia) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnayuda"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:text="🚨 PEDIR AYUDA"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/status_red"
+            app:layout_constraintTop_toBottomOf="@id/estado"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Botón Estoy Bien (verde de seguridad) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnbn"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="✅ ESTOY BIEN"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/status_green"
+            app:layout_constraintTop_toBottomOf="@id/btnayuda"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Tonos Neutros Ejecutivos -->
+    <color name="neutral_dark">#212529</color>
+    <color name="neutral_slate">#495057</color>
+    <color name="neutral_light">#F8F9FA</color>
+    <color name="neutral_border">#DEE2E6</color>
+    <color name="text_primary">#212529</color>
+    <color name="text_secondary">#6C757D</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Estados Funcionales -->
+    <color name="status_green">#2B8A3E</color>
+    <color name="status_yellow">#E67700</color>
+    <color name="status_red">#C92A2A</color>
 </resources>

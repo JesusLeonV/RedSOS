@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pantalla 4: Modal de Activación de Emergencia (SOS) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F2FFFFFF"
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    tools:context=".dialog_sos_emergency">
+
+    <!-- CONTADOR REGRESIVO -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⚠️ ACTIVANDO ALERTA SOS"
+        android:textColor="@color/status_red"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_contador_sos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5"
+        android:textColor="@color/status_red"
+        android:textSize="72sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelando en 5s..."
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp" />
+
+    <!-- DATOS DESPACHADOS -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DATOS QUE SE ENVIARÁN"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_datos_sos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📍 GPS: -18.4783, -70.3126\n🚛 Patente: AB-CD-12\n🏢 Empresa: Transportes XYZ\n📦 Carga: Frutas refrigeradas (4.2°C)"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- SELECCIÓN RÁPIDA DE TIPO DE EMERGENCIA -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TIPO DE EMERGENCIA"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/btn_sos_asalto"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:text="🚨 Asalto / Inseguridad"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="@color/status_red" />
+
+    <Button
+        android:id="@+id/btn_sos_accidente"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="6dp"
+        android:text="🚑 Accidente / Emergencia Médica"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="@color/status_yellow" />
+
+    <Button
+        android:id="@+id/btn_sos_mecanica"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="6dp"
+        android:text="🛠️ Falla Mecánica Crítica"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="@color/neutral_slate" />
+
+    <!-- CANCELAR (botón destacado inferior) -->
+    <Button
+        android:id="@+id/btn_cancelar_sos"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:text="CANCELAR ALERTA (FALSA ALARMA)"
+        android:textStyle="bold"
+        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+</LinearLayout>

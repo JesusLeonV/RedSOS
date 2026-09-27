@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnbn;
     private Button btnayuda;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         btnayuda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Aquí pondrás la lógica de emergencia o envío de alertas
                 Toast.makeText(MainActivity.this, "¡Alerta enviada! Solicitando ayuda...", Toast.LENGTH_SHORT).show();
             }
         });
