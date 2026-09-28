@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Guía de Primeros Auxilios — Offline-first:
+     todo el contenido está en el layout, no requiere internet -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".auxilios">
+
+    <!-- Botón volver -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVolver"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:text="← Volver"
+        android:textColor="@color/neutral_dark"
+        android:textSize="14sp"
+        app:cornerRadius="22dp"
+        app:strokeColor="@color/neutral_border"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="8dp"/>
+
+    <!-- Cabecera -->
+    <TextView
+        android:id="@+id/tituloAuxilios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🩹 PRIMEROS AUXILIOS"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/btnVolver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/subtituloAuxilios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="✅ Disponible sin conexión"
+        android:textColor="@color/status_green"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tituloAuxilios"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp"/>
+
+    <!-- Contenido desplazable -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/subtituloAuxilios"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- 1. RCP -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/neutral_border"
+                app:strokeWidth="1dp"
+                android:layout_marginBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="❤️ RCP (Reanimación)"
+                        android:textColor="@color/status_red"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Llama al 131 antes de empezar.\n2. Manos entrelazadas al centro del pecho.\n3. Comprime fuerte y rápido: 100-120 por minuto.\n4. No te detengas hasta que llegue ayuda."
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:lineSpacingMultiplier="1.3"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 2. Hemorragias -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/neutral_border"
+                app:strokeWidth="1dp"
+                android:layout_marginBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🩸 Hemorragias"
+                        android:textColor="@color/status_red"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Presiona la herida con un paño limpio.\n2. Eleva la zona afectada sobre el corazón.\n3. No retires objetos clavados.\n4. Si no cede, aplica presión más firme y llama al 131."
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:lineSpacingMultiplier="1.3"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 3. Fracturas -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/neutral_border"
+                app:strokeWidth="1dp"
+                android:layout_marginBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🦴 Fracturas"
+                        android:textColor="@color/status_yellow"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. No muevas a la persona salvo peligro inminente.\n2. Inmoviliza la zona con tablas o cartón.\n3. Aplica frío envuelto en tela.\n4. Nunca intentes enderezar el hueso."
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:lineSpacingMultiplier="1.3"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 4. Quemaduras -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/neutral_border"
+                app:strokeWidth="1dp"
+                android:layout_marginBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔥 Quemaduras"
+                        android:textColor="@color/status_yellow"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Enfría con agua corriente 10-15 minutos.\n2. No uses hielo, pasta dental ni aceites.\n3. Cubre con paño limpio y húmedo.\n4. Si hay ampollas grandes, acude al médico."
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:lineSpacingMultiplier="1.3"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 5. Qué hacer en un sismo -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/neutral_border"
+                app:strokeWidth="1dp"
+                android:layout_marginBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🌍 Durante un sismo"
+                        android:textColor="@color/status_red"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Agáchate, cúbrete y agárrate.\n2. Aléjate de ventanas y objetos que caigan.\n3. No uses ascensores ni escaleras durante el movimiento.\n4. Al terminar, evacúa a una zona segura y revisa fugas de gas."
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:lineSpacingMultiplier="1.3"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Aviso final -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⚠️ Esta guía es orientativa y no reemplaza la atención médica profesional. Emergencias: 131 (SAMU) · 132 (Bomberos) · 133 (Carabineros)"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

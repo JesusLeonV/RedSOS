@@ -16,6 +16,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Lee las API keys desde local.properties (archivo ignorado por git)
+        def props = new Properties()
+        def propsFile = rootProject.file('local.properties')
+        if (propsFile.exists()) {
+            propsFile.withInputStream { props.load(it) }
+        }
+        manifestPlaceholders["mapsApiKey"] = props.getProperty("MAPS_API_KEY", "")
     }
 
     buildTypes {
