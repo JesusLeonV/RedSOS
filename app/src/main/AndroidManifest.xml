@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RedSOS">
 
-        <!-- Google Maps API Key (valor en local.properties, no subir a git) -->
+        <!-- Google Maps API Key (valor en local.properties) -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${mapsApiKey}" />
@@ -45,6 +45,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".contactos"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".agregarcontacto"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity

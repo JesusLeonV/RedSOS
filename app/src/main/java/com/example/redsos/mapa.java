@@ -40,7 +40,7 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback {
     private Button btnVolver;
     private GoogleMap mMap;
 
-    // Posición desde la que se calculan las distancias (real si hay GPS, si no Iquique)
+    // Posición desde la que se calculan las distancias
     private LatLng ubicacion = MiUbicacion.IQUIQUE;
     private Marker marcadorMiUbicacion;
 
