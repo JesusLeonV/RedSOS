@@ -31,7 +31,6 @@ public class dialog_sos_emergency extends AppCompatActivity {
         btnAccidente = findViewById(R.id.btn_sos_accidente);
         btnMecanica = findViewById(R.id.btn_sos_mecanica);
 
-        // Cancelar alerta → volver a la pantalla principal
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,12 +39,12 @@ public class dialog_sos_emergency extends AppCompatActivity {
             }
         });
 
-        // Confirmar tipo de emergencia → enviar alerta y volver
         View.OnClickListener enviarAlerta = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tipo = ((Button) v).getText().toString();
-                Toast.makeText(dialog_sos_emergency.this, "🚨 Alerta enviada: " + tipo, Toast.LENGTH_LONG).show();
+                Toast.makeText(dialog_sos_emergency.this,
+                        "🚨 Alerta enviada: " + tipo, Toast.LENGTH_LONG).show();
                 finish();
             }
         };

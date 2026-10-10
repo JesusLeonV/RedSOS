@@ -21,6 +21,8 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import com.example.redsos.repository.RedSosRepository;
+
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         navContactos = findViewById(R.id.navContactos);
         navAuxilios = findViewById(R.id.navAuxilios);
         txtCoordenadas = findViewById(R.id.coordenadas);
+
+        new RedSosRepository(this).reintentarSincronizacion();
 
         // Mapa real de la ubicación actual
         mapViewHome = findViewById(R.id.mapViewHome);

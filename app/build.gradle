@@ -46,6 +46,14 @@ dependencies {
     implementation libs.material
     implementation libs.play.services.maps
     implementation libs.recyclerview
+
+    // Room Database (SQLite local)
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
+
+    // OkHttp para sincronizar con el servidor
+    implementation libs.okhttp
+
     testImplementation libs.junit
     androidTestImplementation libs.espresso.core
     androidTestImplementation libs.ext.junit

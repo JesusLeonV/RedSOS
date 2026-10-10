@@ -12,10 +12,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.redsos.repository.RedSosRepository;
+
 public class informacion extends AppCompatActivity {
 
     private EditText intnmb, intrut, intcelular, intcorreo;
     private Button btninformacion, btnVolver;
+    private RedSosRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class informacion extends AppCompatActivity {
             return insets;
         });
 
+        repository = new RedSosRepository(this);
+
         intnmb = findViewById(R.id.intnmb);
         intrut = findViewById(R.id.intrut);
         intcelular = findViewById(R.id.intcelular);
@@ -36,7 +41,8 @@ public class informacion extends AppCompatActivity {
         btninformacion = findViewById(R.id.btninformacion);
         btnVolver = findViewById(R.id.btnVolver);
 
-        // Volver a la pantalla principal sin guardar
+        cargarDatosGuardados();
+
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,19 +50,40 @@ public class informacion extends AppCompatActivity {
             }
         });
 
-        // Guardar información y regresar
         btninformacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nombre = intnmb.getText().toString().trim();
                 String rut = intrut.getText().toString().trim();
+                String celular = intcelular.getText().toString().trim();
+                String correo = intcorreo.getText().toString().trim();
 
                 if (nombre.isEmpty() || rut.isEmpty()) {
-                    Toast.makeText(informacion.this, "Por favor completa los campos obligatorios", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(informacion.this,
+                            "Por favor completa los campos obligatorios",
+                            Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(informacion.this, "¡Información guardada de " + nombre + "!", Toast.LENGTH_LONG).show();
+                    repository.guardarPerfil(nombre, rut, celular, correo);
+                    Toast.makeText(informacion.this,
+                            "✅ Información guardada",
+                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
+            }
+        });
+    }
+
+    private void cargarDatosGuardados() {
+        com.example.redsos.db.AppDatabase.executor.execute(() -> {
+            com.example.redsos.db.entity.UsuarioPerfil perfil =
+                    com.example.redsos.db.AppDatabase.get(informacion.this).usuarioPerfilDao().get();
+            if (perfil != null) {
+                runOnUiThread(() -> {
+                    if (perfil.nombre != null && !perfil.nombre.isEmpty()) intnmb.setText(perfil.nombre);
+                    if (perfil.rut != null && !perfil.rut.isEmpty()) intrut.setText(perfil.rut);
+                    if (perfil.celular != null && !perfil.celular.isEmpty()) intcelular.setText(perfil.celular);
+                    if (perfil.correo != null && !perfil.correo.isEmpty()) intcorreo.setText(perfil.correo);
+                });
             }
         });
     }
