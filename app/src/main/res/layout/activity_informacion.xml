@@ -167,6 +167,204 @@
                 android:minHeight="48dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Separador -->
+        <View
+            android:id="@+id/separadorMedico"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/neutral_border"
+            app:layout_constraintTop_toBottomOf="@id/layoutCorreo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"/>
+
+        <!-- Título sección médica -->
+        <TextView
+            android:id="@+id/tituloMedico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🆘 DATOS MÉDICOS DE EMERGENCIA"
+            android:textColor="@color/status_red"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:letterSpacing="0.05"
+            app:layout_constraintTop_toBottomOf="@id/separadorMedico"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/subtituloMedico"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Información vital para equipos de rescate en caso de emergencia."
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tituloMedico"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Tipo de sangre (Spinner) -->
+        <Spinner
+            android:id="@+id/spinnerSangre"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/subtituloMedico"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Alergias -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAlergias"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Alergias"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:layout_constraintTop_toBottomOf="@id/spinnerSangre"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/intalergias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Enfermedades crónicas -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEnfermedades"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Enfermedades crónicas"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:layout_constraintTop_toBottomOf="@id/layoutAlergias"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/intenfermedades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Medicamentos -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutMedicamentos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Medicamentos que toma habitualmente"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:layout_constraintTop_toBottomOf="@id/layoutEnfermedades"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/intmedicamentos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Contacto de emergencia -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutContactoEmergencia"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Contacto de emergencia (nombre)"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:layout_constraintTop_toBottomOf="@id/layoutMedicamentos"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/intcontactoemergencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Teléfono de emergencia -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutTelefonoEmergencia"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Teléfono de emergencia"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:prefixText="+56 "
+            app:layout_constraintTop_toBottomOf="@id/layoutContactoEmergencia"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inttelefonoemergencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:minHeight="48dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Observaciones adicionales -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutObservaciones"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Observaciones adicionales"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:layout_constraintTop_toBottomOf="@id/layoutTelefonoEmergencia"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/intobservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <!-- Botón Guardar Información -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btninformacion"
@@ -178,7 +376,7 @@
             android:textStyle="bold"
             app:cornerRadius="16dp"
             app:backgroundTint="@color/neutral_dark"
-            app:layout_constraintTop_toBottomOf="@id/layoutCorreo"
+            app:layout_constraintTop_toBottomOf="@id/layoutObservaciones"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="28dp"

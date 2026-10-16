@@ -5,35 +5,33 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
-/**
- * Obtiene la ubicación GPS del dispositivo.
- * Si nunca respondió, se usa Iquique como respaldo y se avisa con esReal = false.
- * Si el GPS llega después, se llama una segunda vez con esReal = true.
- */
 public final class MiUbicacion {
 
-    // Respaldo: centro de Iquique
     public static final LatLng IQUIQUE = new LatLng(-20.2148, -70.1524);
 
     public interface Callback {
         void onUbicacion(LatLng ubicacion, boolean esReal);
     }
 
-    private static LocationManager gestor;
-    private static LocationListener oyente;
+    private static FusedLocationProviderClient fusedClient;
+    private static LocationCallback locationCallback;
 
-    private MiUbicacion() {
-    }
+    private MiUbicacion() {}
 
     public static boolean tienePermiso(Context ctx) {
         return ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -49,79 +47,61 @@ public final class MiUbicacion {
     }
 
     public static void obtener(Context ctx, Callback cb) {
-        LocationManager manager = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
-        if (manager == null) {
+        if (!tienePermiso(ctx)) {
             cb.onUbicacion(IQUIQUE, false);
             return;
         }
 
-        Location ultima = mejorUltima(ctx, manager);
-        if (ultima != null) {
-            cb.onUbicacion(new LatLng(ultima.getLatitude(), ultima.getLongitude()), true);
-            return;
-        }
+        fusedClient = LocationServices.getFusedLocationProviderClient(ctx);
 
-        // Sin historial todavía: responde ya con el respaldo...
-        cb.onUbicacion(IQUIQUE, false);
+        fusedClient.getLastLocation()
+                .addOnSuccessListener((Activity) ctx, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            cb.onUbicacion(
+                                    new LatLng(location.getLatitude(), location.getLongitude()),
+                                    true
+                            );
+                        } else {
+                            cb.onUbicacion(IQUIQUE, false);
+                            pedirActualizaciones(ctx, cb);
+                        }
+                    }
+                });
+    }
 
-        // ...y si el GPS entrega después, avisa de nuevo con la posición real
-        if (!tienePermiso(ctx)) {
-            return;
-        }
-        cancelar();
-        try {
-            gestor = manager;
-            oyente = new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
+    private static void pedirActualizaciones(Context ctx, Callback cb) {
+        LocationRequest request = new LocationRequest.Builder(
+                Priority.PRIORITY_HIGH_ACCURACY, 5000)
+                .setMinUpdateIntervalMillis(2000)
+                .setMaxUpdates(1)
+                .build();
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult result) {
+                Location loc = result.getLastLocation();
+                if (loc != null) {
                     cancelar();
-                    cb.onUbicacion(new LatLng(location.getLatitude(), location.getLongitude()), true);
+                    cb.onUbicacion(
+                            new LatLng(loc.getLatitude(), loc.getLongitude()),
+                            true
+                    );
                 }
+            }
+        };
 
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-                }
-            };
-            String proveedor = ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED
-                    ? LocationManager.GPS_PROVIDER : LocationManager.NETWORK_PROVIDER;
-            manager.requestLocationUpdates(proveedor, 0, 0, oyente, Looper.getMainLooper());
-        } catch (SecurityException e) {
-            cancelar();
+        try {
+            fusedClient.requestLocationUpdates(request, locationCallback, Looper.getMainLooper());
+        } catch (SecurityException ignored) {
         }
     }
 
     public static void cancelar() {
-        if (gestor != null && oyente != null) {
-            try {
-                gestor.removeUpdates(oyente);
-            } catch (SecurityException ignored) {
-            }
+        if (fusedClient != null && locationCallback != null) {
+            fusedClient.removeLocationUpdates(locationCallback);
         }
-        gestor = null;
-        oyente = null;
-    }
-
-    private static Location mejorUltima(Context ctx, LocationManager manager) {
-        if (!tienePermiso(ctx)) {
-            return null;
-        }
-        try {
-            Location gps = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            Location red = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (gps == null) return red;
-            if (red == null) return gps;
-            return gps.getTime() >= red.getTime() ? gps : red;
-        } catch (SecurityException e) {
-            return null;
-        }
+        locationCallback = null;
     }
 }

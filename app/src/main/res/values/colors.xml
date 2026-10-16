@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Tonos Neutros Ejecutivos -->
-    <color name="neutral_dark">#212529</color>
-    <color name="neutral_slate">#495057</color>
-    <color name="neutral_light">#F8F9FA</color>
-    <color name="neutral_border">#DEE2E6</color>
-    <color name="text_primary">#212529</color>
-    <color name="text_secondary">#545C66</color>
+    <!-- Tonos Neutros -->
+    <color name="neutral_dark">#1A1D21</color>
+    <color name="neutral_slate">#343A40</color>
+    <color name="neutral_light">#F1F3F5</color>
+    <color name="neutral_border">#ADB5BD</color>
+    <color name="text_primary">#1A1D21</color>
+    <color name="text_secondary">#343A40</color>
     <color name="white">#FFFFFF</color>
 
     <!-- Estados Funcionales -->
-    <color name="status_green">#2B8A3E</color>
-    <color name="status_yellow">#B45309</color>
-    <color name="status_red">#C92A2A</color>
+    <color name="status_green">#1B7A2E</color>
+    <color name="status_yellow">#92400E</color>
+    <color name="status_red">#B91C1C</color>
 </resources>

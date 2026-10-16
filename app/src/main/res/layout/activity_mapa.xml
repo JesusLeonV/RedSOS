@@ -9,7 +9,6 @@
     android:background="#FFFFFF"
     tools:context=".mapa">
 
-    <!-- Botón volver -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnVolver"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -23,9 +22,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="48dp"
-        android:layout_marginStart="16dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:elevation="6dp"/>
 
-    <!-- Barra de filtros (scroll horizontal: los chips se deslizan con el dedo) -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/chipsCard"
         android:layout_width="0dp"
@@ -38,14 +38,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="12dp"
+        android:elevation="6dp">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:scrollbars="none"
-            android:fadeScrollbars="true">
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -53,14 +53,14 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipNegocios"
+                    android:id="@+id/chipAlbergues"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"
                     android:checkable="true"
                     android:checked="true"
                     android:textColor="@color/neutral_dark"
-                    android:text="🏫 Negocios" />
+                    android:text="🏫 Albergues" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipPeligro"
@@ -90,41 +90,20 @@
                     android:checkable="true"
                     android:checked="true"
                     android:textColor="@color/neutral_dark"/>
-
             </LinearLayout>
         </HorizontalScrollView>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Mapa cuadrado centrado con marco visible (fondo solo se ve en el editor,
-         al ejecutar Google Maps dibuja encima) -->
-    <FrameLayout
-        android:id="@+id/mapMarco"
+    <!-- SupportMapFragment reemplaza al MapView -->
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toBottomOf="@id/chipsCard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.45"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:background="#D0DCE8"
-        android:elevation="4dp">
-
-        <!-- MapView real de Google Maps -->
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-    <!-- Botón flotante: Reportar incidente -->
-
-    <!-- Botón flotante: Mi ubicación -->
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabMiUbicacion"
@@ -143,14 +122,15 @@
         android:id="@+id/fabReportar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="112dp"
-        android:text="Reportar incidente"
+        android:text="Reportar"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:backgroundTint="@color/status_red"
         app:icon="@android:drawable/ic_dialog_alert"
         app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fabMiUbicacion"
-        tools:layout_editor_absoluteY="760dp" />
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="24dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

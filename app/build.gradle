@@ -17,7 +17,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        // Lee las API keys desde local.properties (archivo ignorado por git)
         def props = new Properties()
         def propsFile = rootProject.file('local.properties')
         if (propsFile.exists()) {
@@ -45,14 +44,8 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.material
     implementation libs.play.services.maps
+    implementation libs.play.services.location
     implementation libs.recyclerview
-
-    // Room Database (SQLite local)
-    implementation libs.room.runtime
-    annotationProcessor libs.room.compiler
-
-    // OkHttp para sincronizar con el servidor
-    implementation libs.okhttp
 
     testImplementation libs.junit
     androidTestImplementation libs.espresso.core

@@ -74,139 +74,18 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="24dp"/>
 
-    <!-- Lista de contactos personales (se inflan más desde SharedPreferences) -->
-    <LinearLayout
-        android:id="@+id/listaContactos"
+    <!-- Lista de contactos personales con RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerContactos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/tituloTusContactos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp">
-
-        <!-- Contacto de ejemplo 1 -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/white"
-            app:strokeColor="@color/neutral_border"
-            app:strokeWidth="1dp"
-            android:layout_marginBottom="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="👤"
-                    android:textSize="32sp"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="María García"
-                        android:textColor="@color/text_primary"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hermana · +56 9 1234 5678"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp"/>
-                </LinearLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLlamarMaria"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="44dp"
-                    android:text="📞 Llamar"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:cornerRadius="12dp"
-                    app:backgroundTint="@color/status_green"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Contacto de ejemplo 2 -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/white"
-            app:strokeColor="@color/neutral_border"
-            app:strokeWidth="1dp"
-            android:layout_marginBottom="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="👤"
-                    android:textSize="32sp"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Carlos López"
-                        android:textColor="@color/text_primary"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Padre · +56 9 8765 4321"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp"/>
-                </LinearLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLlamarCarlos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="44dp"
-                    android:text="📞 Llamar"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:cornerRadius="12dp"
-                    app:backgroundTint="@color/status_green"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
+        android:layout_marginTop="10dp"
+        android:nestedScrollingEnabled="false"/>
 
     <!-- ===== SECCIÓN: SERVICIOS DE EMERGENCIA (por tipo) ===== -->
     <TextView
@@ -217,7 +96,7 @@
         android:textColor="@color/text_primary"
         android:textStyle="bold"
         android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@id/listaContactos"
+        app:layout_constraintTop_toBottomOf="@id/recyclerContactos"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginStart="24dp"/>

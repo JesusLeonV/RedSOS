@@ -2,6 +2,10 @@ package com.example.redsos;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,25 +19,32 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.redsos.db.RedSOSDb;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-import com.example.redsos.repository.RedSosRepository;
-
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, SensorEventListener {
 
     private Button btnbn, btnayuda;
     private Button navInformacion, navMapa, navContactos, navAuxilios;
-
-    private MapView mapViewHome;
     private GoogleMap mapaHome;
     private TextView txtCoordenadas;
     private LatLng ubicacionActual = MiUbicacion.IQUIQUE;
+
+    private RedSOSDb db;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    private SensorManager sensorManager;
+    private Sensor acelerometro;
+    private boolean sensorRegistrado = false;
+    private long ultimaDeteccion = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             return insets;
         });
 
+        db = new RedSOSDb(this);
+
         btnayuda = findViewById(R.id.btnayuda);
         btnbn = findViewById(R.id.btnbn);
         navInformacion = findViewById(R.id.navInformacion);
@@ -55,14 +68,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         navAuxilios = findViewById(R.id.navAuxilios);
         txtCoordenadas = findViewById(R.id.coordenadas);
 
-        new RedSosRepository(this).reintentarSincronizacion();
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.mapViewHome);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
 
-        // Mapa real de la ubicación actual
-        mapViewHome = findViewById(R.id.mapViewHome);
-        mapViewHome.onCreate(savedInstanceState);
-        mapViewHome.getMapAsync(this);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        // Pedir permiso de ubicación y obtener posición GPS
         if (MiUbicacion.tienePermiso(this)) {
             pedirUbicacion();
         } else {
@@ -70,65 +84,56 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             txtCoordenadas.setText("-20.2148, -70.1524");
         }
 
-        // Botón Pedir Ayuda → pantalla de cuenta regresiva SOS
         btnayuda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, dialog_sos_emergency.class));
+                Intent intent = new Intent(MainActivity.this, dialog_sos_emergency.class);
+                Bundle datos = new Bundle();
+                datos.putString("origen", "boton_ayuda");
+                datos.putDouble("lat", ubicacionActual.latitude);
+                datos.putDouble("lon", ubicacionActual.longitude);
+                intent.putExtras(datos);
+                startActivity(intent);
             }
         });
 
-        // Botón Estoy Bien → aviso de estado
         btnbn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Estado actualizado: Estoy Bien", Toast.LENGTH_SHORT).show();
+                double lat = ubicacionActual.latitude;
+                double lon = ubicacionActual.longitude;
+                executor.execute(() -> {
+                    db.insertarReporte("Seguro", "Estoy bien", lat, lon);
+                    runOnUiThread(() ->
+                            Toast.makeText(MainActivity.this, "✅ Estado enviado: Estoy Bien",
+                                    Toast.LENGTH_SHORT).show());
+                });
             }
         });
 
-        // Navegación a otras pantallas
-        navInformacion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, informacion.class));
-            }
-        });
+        navInformacion.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, informacion.class)));
 
-        navMapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, mapa.class));
-            }
-        });
+        navMapa.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, mapa.class)));
 
-        navContactos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, contactos.class));
-            }
-        });
+        navContactos.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, contactos.class)));
 
-        navAuxilios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, auxilios.class));
-            }
-        });
+        navAuxilios.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, auxilios.class)));
     }
 
     private void pedirUbicacion() {
-        MiUbicacion.obtener(this, new MiUbicacion.Callback() {
-            @Override
-            public void onUbicacion(LatLng ubicacion, boolean esReal) {
-                ubicacionActual = ubicacion;
-                txtCoordenadas.setText(String.format(Locale.US, "%.5f, %.5f",
-                        ubicacion.latitude, ubicacion.longitude));
-                if (mapaHome != null) {
-                    if (esReal) {
-                        mapaHome.animateCamera(CameraUpdateFactory.newLatLngZoom(ubicacion, 15));
-                    } else {
-                        mapaHome.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacion, 14));
-                    }
+        MiUbicacion.obtener(this, (ubicacion, esReal) -> {
+            ubicacionActual = ubicacion;
+            txtCoordenadas.setText(String.format(Locale.US, "%.5f, %.5f",
+                    ubicacion.latitude, ubicacion.longitude));
+            if (mapaHome != null) {
+                if (esReal) {
+                    mapaHome.animateCamera(CameraUpdateFactory.newLatLngZoom(ubicacion, 15));
+                } else {
+                    mapaHome.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacion, 14));
                 }
             }
         });
@@ -141,9 +146,49 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             if (MiUbicacion.tienePermiso(this)) {
                 mapaHome.setMyLocationEnabled(true);
             }
-        } catch (SecurityException ignored) {
-        }
+        } catch (SecurityException ignored) {}
         mapaHome.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacionActual, 15));
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            double magnitud = Math.sqrt(x * x + y * y + z * z);
+
+            if (magnitud > 15) {
+                long ahora = System.currentTimeMillis();
+                if (ahora - ultimaDeteccion > 5000) {
+                    ultimaDeteccion = ahora;
+                    Toast.makeText(this, "🌍 ¡Sacudida detectada! ¿Estás bien?",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (acelerometro != null) {
+            sensorManager.registerListener(this, acelerometro,
+                    SensorManager.SENSOR_DELAY_NORMAL);
+            sensorRegistrado = true;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (sensorRegistrado) {
+            sensorManager.unregisterListener(this);
+            sensorRegistrado = false;
+        }
     }
 
     @Override
@@ -154,40 +199,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             pedirUbicacion();
             try {
-                if (mapaHome != null) {
-                    mapaHome.setMyLocationEnabled(true);
-                }
-            } catch (SecurityException ignored) {
-            }
-        } else {
-            Toast.makeText(this, "Sin permiso de ubicación: se muestra Iquique",
-                    Toast.LENGTH_SHORT).show();
+                if (mapaHome != null) mapaHome.setMyLocationEnabled(true);
+            } catch (SecurityException ignored) {}
         }
-    }
-
-    // Ciclo de vida del MapView
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapViewHome.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        mapViewHome.onPause();
-        super.onPause();
     }
 
     @Override
     protected void onDestroy() {
         MiUbicacion.cancelar();
-        mapViewHome.onDestroy();
         super.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapViewHome.onLowMemory();
     }
 }
