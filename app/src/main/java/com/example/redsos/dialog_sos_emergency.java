@@ -2,6 +2,7 @@ package com.example.redsos;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -27,6 +28,12 @@ public class dialog_sos_emergency extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
+        // Seguridad: bloquea capturas de pantalla durante una alerta SOS.
+        // Evita que terceros vean la ubicación de la emergencia en apps recientes.
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE);
+
         setContentView(R.layout.activity_dialog_sos_emergency);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
