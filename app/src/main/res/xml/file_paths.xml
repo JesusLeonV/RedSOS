@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Rutas seguras para el FileProvider.
+    Define qué carpetas internas puede compartir la app con otras
+    (ej: la cámara) sin exponer el sistema de archivos completo.
+-->
+<paths>
+    <!-- Fotos de evidencia de reportes: carpeta Pictures propia de la app -->
+    <external-files-path
+        name="fotos"
+        path="Pictures/" />
+
+    <!-- Archivos internos generales (respaldos, exportaciones futuras) -->
+    <files-path
+        name="internos"
+        path="datos/" />
+</paths>
