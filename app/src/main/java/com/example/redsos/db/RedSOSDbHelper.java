@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class RedSOSDbHelper extends SQLiteOpenHelper {
 
     private static final String NOMBRE_DB = "redsos.db";
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
 
     private static RedSOSDbHelper instancia;
 

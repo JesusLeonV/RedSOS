@@ -59,7 +59,7 @@ public class dialog_sos_emergency extends AppCompatActivity {
             double lon = MiUbicacion.IQUIQUE.longitude;
 
             executor.execute(() -> {
-                db.insertarReporte(tipo, "Emergencia reportada", lat, lon);
+                db.insertarReporte(tipo, "Emergencia reportada", lat, lon, null);
                 runOnUiThread(() -> {
                     Toast.makeText(this, "🚨 Alerta: " + tipo + " guardada",
                             Toast.LENGTH_LONG).show();

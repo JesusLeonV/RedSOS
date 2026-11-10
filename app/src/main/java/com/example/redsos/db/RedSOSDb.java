@@ -181,7 +181,8 @@ public class RedSOSDb {
 
     // ==================== REPORTES CRUD ====================
 
-    public long insertarReporte(String tipo, String descripcion, double lat, double lon) {
+    public long insertarReporte(String tipo, String descripcion, double lat, double lon,
+                                String rutaFoto) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues valores = new ContentValues();
         valores.put(TablaReportes.COL_TIPO, tipo);
@@ -189,6 +190,7 @@ public class RedSOSDb {
         valores.put(TablaReportes.COL_LATITUD, lat);
         valores.put(TablaReportes.COL_LONGITUD, lon);
         valores.put(TablaReportes.COL_FECHA, System.currentTimeMillis());
+        valores.put(TablaReportes.COL_RUTA_FOTO, rutaFoto);
         valores.put(TablaReportes.COL_SINCRONIZADO, 0);
         return db.insert(TablaReportes.NOMBRE_TABLA, null, valores);
     }
@@ -207,7 +209,8 @@ public class RedSOSDb {
                     cursor.getString(cursor.getColumnIndexOrThrow(TablaReportes.COL_TIPO)),
                     cursor.getString(cursor.getColumnIndexOrThrow(TablaReportes.COL_DESCRIPCION)),
                     String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(TablaReportes.COL_LATITUD))),
-                    String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(TablaReportes.COL_LONGITUD)))
+                    String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(TablaReportes.COL_LONGITUD))),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaReportes.COL_RUTA_FOTO))
             };
             lista.add(fila);
         }

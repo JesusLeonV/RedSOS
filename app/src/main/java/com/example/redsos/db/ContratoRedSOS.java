@@ -65,6 +65,7 @@ public final class ContratoRedSOS {
         public static final String COL_LATITUD = "latitud";
         public static final String COL_LONGITUD = "longitud";
         public static final String COL_FECHA = "fecha";
+        public static final String COL_RUTA_FOTO = "ruta_foto";
         public static final String COL_SINCRONIZADO = "sincronizado";
 
         public static final String CREAR_TABLA =
@@ -75,6 +76,7 @@ public final class ContratoRedSOS {
                         COL_LATITUD + " REAL NOT NULL, " +
                         COL_LONGITUD + " REAL NOT NULL, " +
                         COL_FECHA + " INTEGER, " +
+                        COL_RUTA_FOTO + " TEXT, " +
                         COL_SINCRONIZADO + " INTEGER DEFAULT 0)";
     }
 }

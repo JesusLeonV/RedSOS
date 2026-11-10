@@ -173,7 +173,7 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback {
                     String tipo = tipos[which];
                     executor.execute(() -> {
                         db.insertarReporte(tipo, "Reportado por usuario",
-                                ubicacion.latitude, ubicacion.longitude);
+                                ubicacion.latitude, ubicacion.longitude, null);
                         runOnUiThread(() -> {
                             cargarReportesDesdeDB();
                             Toast.makeText(this, "📍 Reporte guardado: " + tipo,
