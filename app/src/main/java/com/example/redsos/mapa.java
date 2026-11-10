@@ -121,6 +121,38 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback {
         } catch (SecurityException ignored) {}
         cargarReportesDesdeDB();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacion, 15));
+
+        // Al tocar un marcador con foto, se muestra la evidencia
+        mMap.setOnMarkerClickListener(marker -> {
+            Object tag = marker.getTag();
+            if (tag instanceof String) {
+                mostrarFoto((String) tag, marker.getTitle());
+            }
+            return false; // deja que también aparezca la ventana de info
+        });
+    }
+
+    // Muestra la foto guardada del reporte en un diálogo
+    private void mostrarFoto(String rutaFoto, String titulo) {
+        if (rutaFoto == null || rutaFoto.isEmpty()) return;
+
+        File archivo = new File(rutaFoto);
+        if (!archivo.exists()) return;
+
+        android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeFile(rutaFoto);
+        if (bitmap == null) return;
+
+        android.widget.ImageView imagen = new android.widget.ImageView(this);
+        imagen.setImageBitmap(bitmap);
+        imagen.setAdjustViewBounds(true);
+        int padding = (int) (12 * getResources().getDisplayMetrics().density);
+        imagen.setPadding(padding, padding, padding, padding);
+
+        new AlertDialog.Builder(this)
+                .setTitle("📷 " + titulo)
+                .setView(imagen)
+                .setPositiveButton("Cerrar", null)
+                .show();
     }
 
     private void cargarReportesDesdeDB() {
@@ -169,7 +201,10 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback {
                             .title(tipo + ": " + r[2])
                             .snippet("A " + calcularDistancia(punto) + " de ti")
                             .icon(BitmapDescriptorFactory.defaultMarker(color)));
-                    if (m != null) lista.add(m);
+                    if (m != null) {
+                        m.setTag(r[5]); // ruta de la foto (null si no tiene)
+                        lista.add(m);
+                    }
                 }
             });
         });
