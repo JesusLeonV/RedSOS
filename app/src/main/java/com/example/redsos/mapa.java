@@ -3,13 +3,16 @@ package com.example.redsos;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -27,6 +30,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,10 +41,16 @@ import java.util.concurrent.Executors;
 
 public class mapa extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final int CODIGO_FOTO = 101;
+
     private GoogleMap mMap;
     private LatLng ubicacion = MiUbicacion.IQUIQUE;
     private RedSOSDb db;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    // Datos del reporte que está en curso (esperando posible foto)
+    private String tipoPendiente;
+    private String rutaFotoPendiente;
 
     private final List<Marker> marcadoresAlbergues = new ArrayList<>();
     private final List<Marker> marcadoresPeligro = new ArrayList<>();
@@ -170,19 +180,72 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback {
         new AlertDialog.Builder(this)
                 .setTitle("Reportar incidente")
                 .setItems(tipos, (dialog, which) -> {
-                    String tipo = tipos[which];
-                    executor.execute(() -> {
-                        db.insertarReporte(tipo, "Reportado por usuario",
-                                ubicacion.latitude, ubicacion.longitude, null);
-                        runOnUiThread(() -> {
-                            cargarReportesDesdeDB();
-                            Toast.makeText(this, "📍 Reporte guardado: " + tipo,
-                                    Toast.LENGTH_SHORT).show();
-                        });
-                    });
+                    tipoPendiente = tipos[which];
+                    preguntarFoto();
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
+    }
+
+    // Pregunta si el usuario quiere adjuntar una foto como evidencia
+    private void preguntarFoto() {
+        new AlertDialog.Builder(this)
+                .setTitle("Evidencia fotográfica")
+                .setMessage("¿Quieres agregar una foto del incidente?")
+                .setPositiveButton("📷 Tomar foto", (d, w) -> tomarFoto())
+                .setNegativeButton("Guardar sin foto", (d, w) -> guardarReporte(null))
+                .show();
+    }
+
+    // Abre la cámara con una URI segura del FileProvider (nunca file:// directo)
+    private void tomarFoto() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Esta ruta debe coincidir con file_paths.xml (external-files-path/Pictures)
+        File carpeta = new File(getExternalFilesDir(null), "Pictures");
+        if (!carpeta.exists()) carpeta.mkdirs();
+
+        File archivo = new File(carpeta, "reporte_" + System.currentTimeMillis() + ".jpg");
+        rutaFotoPendiente = archivo.getAbsolutePath();
+
+        Uri uriFoto = FileProvider.getUriForFile(this,
+                "com.example.redsos.fileprovider", archivo);
+        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uriFoto);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, CODIGO_FOTO);
+        } else {
+            Toast.makeText(this, "No hay app de cámara disponible", Toast.LENGTH_SHORT).show();
+            preguntarFoto();
+        }
+    }
+
+    // Resultado de la cámara: si salió bien, guardamos el reporte con la foto
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CODIGO_FOTO) {
+            if (resultCode == RESULT_OK) {
+                guardarReporte(rutaFotoPendiente);
+            } else {
+                Toast.makeText(this, "Foto cancelada", Toast.LENGTH_SHORT).show();
+                preguntarFoto();
+            }
+        }
+    }
+
+    // Guarda el reporte pendiente en SQLite (con o sin ruta de foto)
+    private void guardarReporte(String rutaFoto) {
+        executor.execute(() -> {
+            db.insertarReporte(tipoPendiente, "Reportado por usuario",
+                    ubicacion.latitude, ubicacion.longitude, rutaFoto);
+            runOnUiThread(() -> {
+                cargarReportesDesdeDB();
+                String detalle = (rutaFoto != null) ? " 📷" : "";
+                Toast.makeText(this, "📍 Reporte guardado: " + tipoPendiente + detalle,
+                        Toast.LENGTH_SHORT).show();
+            });
+        });
     }
 
     private String calcularDistancia(LatLng destino) {
