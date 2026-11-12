@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -30,6 +31,13 @@ import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Pantalla principal de RedSOS.
+ * Aquí está el mapa pequeño, el botón de pedir ayuda, el de "estoy bien"
+ * y los botones para ir a las otras pantallas.
+ * También escucha el acelerómetro: si detecta una sacudida fuerte
+ * abre un check-in para que el usuario confirme si está bien o no.
+ */
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, SensorEventListener {
 
     private Button btnbn, btnayuda;
@@ -74,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapFragment.getMapAsync(this);
         }
 
+        // Conseguimos el acelerómetro del celular
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
@@ -84,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             txtCoordenadas.setText("-20.2148, -70.1524");
         }
 
+        // Botón de ayuda: abre la pantalla SOS y le manda la ubicación en un Bundle
         btnayuda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,13 +107,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        // Botón "estoy bien": guarda el estado en la base de datos
         btnbn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double lat = ubicacionActual.latitude;
                 double lon = ubicacionActual.longitude;
                 executor.execute(() -> {
-                    db.insertarReporte("Seguro", "Estoy bien", lat, lon);
+                    db.insertarReporte("Seguro", "Estoy bien", lat, lon, null);
                     runOnUiThread(() ->
                             Toast.makeText(MainActivity.this, "✅ Estado enviado: Estoy Bien",
                                     Toast.LENGTH_SHORT).show());
@@ -111,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        // Navegación a las otras pantallas
         navInformacion.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, informacion.class)));
 
@@ -124,6 +136,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(new Intent(MainActivity.this, auxilios.class)));
     }
 
+    /**
+     * Pide la ubicación al GPS y la muestra en pantalla.
+     * Si el GPS responde, también mueve el mapa hacia ahí.
+     */
     private void pedirUbicacion() {
         MiUbicacion.obtener(this, (ubicacion, esReal) -> {
             ubicacionActual = ubicacion;
@@ -139,6 +155,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+    /**
+     * Se llama cuando el mapa termina de cargar.
+     * Activa el punto azul de "mi ubicación" si hay permiso.
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mapaHome = googleMap;
@@ -150,6 +170,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapaHome.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacionActual, 15));
     }
 
+    /**
+     * Se llama cada vez que el acelerómetro cambia.
+     * Calcula qué tan fuerte se movió el celular y si pasa de 15
+     * (una sacudida fuerte, en reposo da 9.8) abre el check-in.
+     */
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -160,18 +185,49 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             if (magnitud > 15) {
                 long ahora = System.currentTimeMillis();
+                // Esperamos 5 segundos entre detecciones para que no se abra mil veces
                 if (ahora - ultimaDeteccion > 5000) {
                     ultimaDeteccion = ahora;
-                    Toast.makeText(this, "🌍 ¡Sacudida detectada! ¿Estás bien?",
-                            Toast.LENGTH_LONG).show();
+                    mostrarCheckIn();
                 }
             }
         }
     }
 
+    /**
+     * Check-in de seguridad: se abre solo cuando el sensor detecta una sacudida.
+     * El usuario confirma si está bien o si necesita ayuda y se guarda en la BD.
+     */
+    private void mostrarCheckIn() {
+        new AlertDialog.Builder(this)
+                .setTitle("🌍 ¡Sacudida detectada!")
+                .setMessage("¿Te encuentras bien?")
+                .setPositiveButton("Estoy bien", (d, w) -> guardarCheckIn("Estoy bien"))
+                .setNegativeButton("Necesito ayuda", (d, w) -> guardarCheckIn("Necesito ayuda"))
+                .show();
+    }
+
+    /**
+     * Guarda el resultado del check-in en la tabla reportes.
+     * @param estado lo que respondió el usuario ("Estoy bien" o "Necesito ayuda")
+     */
+    private void guardarCheckIn(String estado) {
+        double lat = ubicacionActual.latitude;
+        double lon = ubicacionActual.longitude;
+        executor.execute(() -> {
+            db.insertarReporte(estado, "Check-in automatico por sacudida", lat, lon, null);
+            runOnUiThread(() ->
+                    Toast.makeText(this, "✅ Estado guardado: " + estado,
+                            Toast.LENGTH_SHORT).show());
+        });
+    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
+    /**
+     * Registro el oyente del sensor cuando la pantalla está visible.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -182,6 +238,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    /**
+     * Quito el oyente cuando la pantalla ya no está visible para gastar menos batería.
+     */
     @Override
     protected void onPause() {
         super.onPause();
