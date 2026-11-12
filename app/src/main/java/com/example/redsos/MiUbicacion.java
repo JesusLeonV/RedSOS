@@ -20,10 +20,25 @@ import com.google.android.gms.location.Priority;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+/**
+ * MiUbicacion consigue la ubicación del celular con FusedLocationProviderClient
+ * (el GPS de Google, que es más preciso que el LocationManager normal).
+ *
+ * Primero intenta con la última ubicación conocida.
+ * Si no hay ninguna, devuelve Iquique como respaldo (con esReal = false)
+ * y se queda esperando al GPS. Cuando el GPS responde, avisa otra vez
+ * con esReal = true para que la pantalla actualice el mapa.
+ */
 public final class MiUbicacion {
 
+    // Respaldo si el GPS no responde: centro de Iquique
     public static final LatLng IQUIQUE = new LatLng(-20.2148, -70.1524);
 
+    /**
+     * Avisa cuando hay una ubicación lista.
+     * @param ubicacion las coordenadas encontradas
+     * @param esReal true si viene del GPS, false si es el respaldo de Iquique
+     */
     public interface Callback {
         void onUbicacion(LatLng ubicacion, boolean esReal);
     }
@@ -33,6 +48,11 @@ public final class MiUbicacion {
 
     private MiUbicacion() {}
 
+    /**
+     * Revisa si la app ya tiene permiso de ubicación.
+     * @param ctx el contexto
+     * @return true si ACCESS_FINE o ACCESS_COARSE ya están concedidos
+     */
     public static boolean tienePermiso(Context ctx) {
         return ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED
@@ -40,12 +60,25 @@ public final class MiUbicacion {
                 == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Muestra el diálogo de Android para pedir el permiso de ubicación.
+     * La respuesta llega en onRequestPermissionsResult de la activity.
+     * @param activity la pantalla que pide el permiso
+     */
     public static void pedirPermiso(Activity activity) {
         ActivityCompat.requestPermissions(activity, new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
     }
 
+    /**
+     * Consigue la ubicación del celular.
+     * Primero prueba con la última conocida y si no hay ninguna
+     * devuelve el respaldo y pide actualizaciones al GPS.
+     *
+     * @param ctx el contexto
+     * @param cb el callback que recibe la ubicación cuando esté lista
+     */
     public static void obtener(Context ctx, Callback cb) {
         if (!tienePermiso(ctx)) {
             cb.onUbicacion(IQUIQUE, false);
@@ -64,6 +97,7 @@ public final class MiUbicacion {
                                     true
                             );
                         } else {
+                            // Sin última ubicación: respaldo + esperar al GPS
                             cb.onUbicacion(IQUIQUE, false);
                             pedirActualizaciones(ctx, cb);
                         }
@@ -71,6 +105,12 @@ public final class MiUbicacion {
                 });
     }
 
+    /**
+     * Pide al GPS una actualización nueva (solo 1, con prioridad alta).
+     *
+     * @param ctx el contexto
+     * @param cb el callback que recibe la ubicación cuando llegue
+     */
     private static void pedirActualizaciones(Context ctx, Callback cb) {
         LocationRequest request = new LocationRequest.Builder(
                 Priority.PRIORITY_HIGH_ACCURACY, 5000)
@@ -98,6 +138,10 @@ public final class MiUbicacion {
         }
     }
 
+    /**
+     * Deja de escuchar al GPS (se llama al cerrar la pantalla
+     * para no gastar batería de más).
+     */
     public static void cancelar() {
         if (fusedClient != null && locationCallback != null) {
             fusedClient.removeLocationUpdates(locationCallback);
