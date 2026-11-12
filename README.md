@@ -43,8 +43,21 @@ RedSOS es una aplicación Android de emergencia. Permite reportar incidentes con
 
 ## Documentación técnica
 
-- [Diagrama de flujo de pantallas (UI Flow)](docs/diagrama-flujo.md)
-- [Modelo Entidad-Relación de la base de datos (ERD)](docs/modelo-er.md)
+### Diagrama de flujo de pantallas (UI Flow)
+
+![Diagrama de flujo de pantallas](docs/diagrama-flujo.png)
+
+### Modelo Entidad-Relación de la base de datos (ERD)
+
+![Modelo Entidad-Relación](docs/modelo-er.png)
+
+### Diagrama de clases UML
+
+![Diagrama de clases](docs/diagrama-uml.png)
+
+### Diagrama de casos de uso
+
+![Casos de uso](docs/casos-de-uso.png)
 
 ## Estructura del Proyecto
 
