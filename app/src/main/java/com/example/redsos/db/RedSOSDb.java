@@ -12,6 +12,15 @@ import com.example.redsos.db.ContratoRedSOS.TablaReportes;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * RedSOSDb tiene todas las operaciones de la base de datos:
+ * guardar, leer, actualizar y borrar (CRUD).
+ * Es la única clase que habla directo con SQLite, las pantallas no tocan la BD.
+ *
+ * Para escribir usa ContentValues y para leer usa Cursor.
+ * Todas las consultas con condiciones usan selectionArgs (los "?") para
+ * evitar inyección SQL.
+ */
 public class RedSOSDb {
 
     private final RedSOSDbHelper helper;
@@ -22,6 +31,16 @@ public class RedSOSDb {
 
     // ==================== CONTACTOS CRUD ====================
 
+    /**
+     * Guarda un contacto nuevo en la tabla contactos.
+     *
+     * @param nombre     nombre de la persona
+     * @param parentesco relación con el usuario (madre, hermano, etc)
+     * @param telefono   número de teléfono
+     * @param lat        latitud de la ubicación del contacto (puede ser 0)
+     * @param lon        longitud de la ubicación del contacto (puede ser 0)
+     * @return el id que la base de datos le asignó al contacto nuevo
+     */
     public long insertarContacto(String nombre, String parentesco, String telefono,
                                  double lat, double lon) {
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -35,6 +54,12 @@ public class RedSOSDb {
         return db.insert(TablaContactos.NOMBRE_TABLA, null, valores);
     }
 
+    /**
+     * Lee todos los contactos guardados, del más nuevo al más viejo.
+     *
+     * @return lista de contactos. Cada contacto es un String[] con:
+     *         [0] id, [1] nombre, [2] parentesco, [3] teléfono
+     */
     public List<String[]> obtenerTodosContactos() {
         List<String[]> lista = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -63,6 +88,15 @@ public class RedSOSDb {
         return lista;
     }
 
+    /**
+     * Actualiza los datos de un contacto que ya existe.
+     *
+     * @param id         el id del contacto a cambiar
+     * @param nombre     el nombre nuevo
+     * @param parentesco el parentesco nuevo
+     * @param telefono   el teléfono nuevo
+     * @return cuántas filas se cambiaron (0 si no existía ese id)
+     */
     public int actualizarContacto(int id, String nombre, String parentesco, String telefono) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues valores = new ContentValues();
@@ -78,6 +112,12 @@ public class RedSOSDb {
         );
     }
 
+    /**
+     * Borra un contacto de la tabla.
+     *
+     * @param id el id del contacto a borrar
+     * @return cuántas filas se borraron (0 si no existía ese id)
+     */
     public int eliminarContacto(int id) {
         SQLiteDatabase db = helper.getWritableDatabase();
         return db.delete(
@@ -87,6 +127,12 @@ public class RedSOSDb {
         );
     }
 
+    /**
+     * Busca los contactos que todavía no se mandaron al servidor.
+     *
+     * @return lista de contactos con sincronizado = 0.
+     *         Cada uno es: [0] id, [1] nombre, [2] parentesco, [3] teléfono
+     */
     public List<String[]> obtenerContactosSinSincronizar() {
         List<String[]> lista = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -110,6 +156,11 @@ public class RedSOSDb {
         return lista;
     }
 
+    /**
+     * Marca un contacto como ya sincronizado para no mandarlo de nuevo.
+     *
+     * @param id el id del contacto que ya llegó al servidor
+     */
     public void marcarContactoSincronizado(int id) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues valores = new ContentValues();
@@ -124,6 +175,22 @@ public class RedSOSDb {
 
     // ==================== PERFIL CRUD ====================
 
+    /**
+     * Guarda el perfil del usuario con sus datos personales y médicos.
+     * Si ya había un perfil lo reemplaza (solo hay uno).
+     *
+     * @param nombre            nombre completo
+     * @param rut               RUT chileno
+     * @param celular           número de celular
+     * @param correo            correo electrónico
+     * @param tipoSangre        tipo de sangre (A+, O-, etc)
+     * @param alergias          alergias que tiene
+     * @param enfermedades      enfermedades crónicas
+     * @param medicamentos      medicamentos que toma seguido
+     * @param contactoEmergencia nombre de su contacto de emergencia
+     * @param telefonoEmergencia teléfono de su contacto de emergencia
+     * @param observaciones     cualquier dato extra útil en una emergencia
+     */
     public void guardarPerfil(String nombre, String rut, String celular, String correo,
                               String tipoSangre, String alergias, String enfermedades,
                               String medicamentos, String contactoEmergencia,
@@ -146,6 +213,14 @@ public class RedSOSDb {
                 SQLiteDatabase.CONFLICT_REPLACE);
     }
 
+    /**
+     * Lee el perfil guardado.
+     *
+     * @return un String[] con: [0] nombre, [1] rut, [2] celular, [3] correo,
+     *         [4] tipo de sangre, [5] alergias, [6] enfermedades, [7] medicamentos,
+     *         [8] contacto de emergencia, [9] teléfono de emergencia, [10] observaciones.
+     *         Devuelve null si todavía no hay perfil guardado.
+     */
     public String[] obtenerPerfil() {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.query(
@@ -172,6 +247,9 @@ public class RedSOSDb {
         return resultado;
     }
 
+    /**
+     * Marca el perfil como ya sincronizado con el servidor.
+     */
     public void marcarPerfilSincronizado() {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues valores = new ContentValues();
@@ -181,6 +259,17 @@ public class RedSOSDb {
 
     // ==================== REPORTES CRUD ====================
 
+    /**
+     * Guarda un reporte de incidente (o check-in de seguridad).
+     * Se usa desde el mapa, el botón SOS y el sensor de sacudidas.
+     *
+     * @param tipo        tipo de reporte (Peligro, Albergue, Agua, Ayuda, Seguro, etc)
+     * @param descripcion texto que explica el reporte
+     * @param lat         latitud donde pasó
+     * @param lon         longitud donde pasó
+     * @param rutaFoto    ruta de la foto de evidencia, o null si no tiene
+     * @return el id que la base de datos le asignó al reporte
+     */
     public long insertarReporte(String tipo, String descripcion, double lat, double lon,
                                 String rutaFoto) {
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -195,6 +284,12 @@ public class RedSOSDb {
         return db.insert(TablaReportes.NOMBRE_TABLA, null, valores);
     }
 
+    /**
+     * Lee todos los reportes, del más reciente al más viejo.
+     *
+     * @return lista de reportes. Cada uno es un String[] con:
+     *         [0] id, [1] tipo, [2] descripción, [3] latitud, [4] longitud, [5] ruta de foto
+     */
     public List<String[]> obtenerTodosReportes() {
         List<String[]> lista = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -218,6 +313,12 @@ public class RedSOSDb {
         return lista;
     }
 
+    /**
+     * Borra un reporte de la tabla.
+     *
+     * @param id el id del reporte a borrar
+     * @return cuántas filas se borraron (0 si no existía ese id)
+     */
     public int eliminarReporte(int id) {
         SQLiteDatabase db = helper.getWritableDatabase();
         return db.delete(
@@ -227,6 +328,11 @@ public class RedSOSDb {
         );
     }
 
+    /**
+     * Marca un reporte como ya sincronizado con el servidor.
+     *
+     * @param id el id del reporte que ya se mandó
+     */
     public void marcarReporteSincronizado(int id) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues valores = new ContentValues();
