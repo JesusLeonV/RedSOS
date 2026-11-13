@@ -23,6 +23,13 @@ android {
             propsFile.withInputStream { props.load(it) }
         }
         manifestPlaceholders["mapsApiKey"] = props.getProperty("MAPS_API_KEY", "")
+        // Llave del endpoint de respaldo (valor en local.properties, no va en git)
+        buildConfigField "String", "REDSOS_API_KEY",
+                "\"" + props.getProperty("REDSOS_API_KEY", "") + "\""
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     buildTypes {

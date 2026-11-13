@@ -106,7 +106,7 @@ com.example.redsos/
 ## Permisos usados
 
 - `ACCESS_FINE_LOCATION` / `ACCESS_COARSE_LOCATION` — geolocalización del usuario
-- `INTERNET` / `ACCESS_NETWORK_STATE` — tiles del mapa de Google
+- `INTERNET` / `ACCESS_NETWORK_STATE` — tiles del mapa de Google y respaldo al servidor
 
 > Aplicamos el principio de mínimo privilegio: solo se declaran los permisos que el código usa hoy.
 
@@ -117,6 +117,21 @@ com.example.redsos/
 - `FileProvider` con URIs `content://` seguras para la cámara
 - `FLAG_SECURE` en la pantalla de datos médicos y en la alerta SOS (bloquea capturas)
 - Auditoría de permisos: se removieron los que no se usaban
+
+## Respaldo en el servidor
+
+Los datos se guardan **siempre en local** (SQLite) y además se suben a un servidor propio como respaldo:
+
+1. Al abrir la app, `RespaldoServidor` lee en un hilo secundario las filas con `sincronizado = 0` (perfil, contactos y reportes).
+2. Las envía en un solo JSON por `POST` a `https://cloudsolutions.cl/api/redsos/backup`.
+3. Si el servidor responde 2xx, esas filas se marcan `sincronizado = 1` y no se vuelven a subir. Si no hay conexión, quedan pendientes y se reintentan la próxima vez.
+4. En el servidor, cada JSON se guarda como archivo en `/home/jesus/backups/redsos/` (servicio `redsos-backup`, Python, systemd).
+
+Detalles de seguridad del respaldo:
+
+- El endpoint exige la cabecera `X-RedSOS-Key`; sin ella responde `401`.
+- La llave va en `local.properties` (`REDSOS_API_KEY`) — igual que la de Maps — y entra al APK por `BuildConfig`; **no está en el repositorio**.
+- Límite de 5 MB por petición, nombre de archivo generado por el servidor (sin datos del cliente) y rate limit en nginx.
 
 ## Autor
 

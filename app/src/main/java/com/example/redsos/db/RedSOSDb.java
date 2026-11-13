@@ -344,4 +344,109 @@ public class RedSOSDb {
                 new String[]{String.valueOf(id)}
         );
     }
+
+    // ==================== RESPALDO AL SERVIDOR ====================
+
+    /**
+     * Lee el perfil solo si todavía no se ha mandado al servidor
+     * (sincronizado = 0). Es lo que sube la clase RespaldoServidor.
+     *
+     * @return el perfil en el mismo formato que {@link #obtenerPerfil()},
+     *         o null si no hay perfil o ya está sincronizado.
+     */
+    public String[] obtenerPerfilSinSincronizar() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query(
+                TablaPerfil.NOMBRE_TABLA,
+                null,
+                TablaPerfil.COL_SINCRONIZADO + " = ?",
+                new String[]{"0"},
+                null, null, null
+        );
+        String[] resultado = null;
+        if (cursor.moveToFirst()) {
+            resultado = new String[]{
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_NOMBRE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_RUT)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_CELULAR)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_CORREO)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_TIPO_SANGRE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_ALERGIAS)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_ENFERMEDADES)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_MEDICAMENTOS)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_CONTACTO_EMERGENCIA)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_TELEFONO_EMERGENCIA)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaPerfil.COL_OBSERVACIONES))
+            };
+        }
+        cursor.close();
+        return resultado;
+    }
+
+    /**
+     * Busca los contactos que todavía no se mandaron al servidor,
+     * con todas sus columnas (para el respaldo completo).
+     *
+     * @return lista de contactos pendientes. Cada uno es:
+     *         [0] id, [1] nombre, [2] parentesco, [3] teléfono,
+     *         [4] latitud, [5] longitud
+     */
+    public List<String[]> obtenerContactosSinSincronizarCompletos() {
+        List<String[]> lista = new ArrayList<>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query(
+                TablaContactos.NOMBRE_TABLA,
+                null,
+                TablaContactos.COL_SINCRONIZADO + " = ?",
+                new String[]{"0"},
+                null, null, null
+        );
+        while (cursor.moveToNext()) {
+            String[] fila = new String[]{
+                    String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(TablaContactos._ID))),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaContactos.COL_NOMBRE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaContactos.COL_PARENTESCO)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaContactos.COL_TELEFONO)),
+                    String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(TablaContactos.COL_LATITUD))),
+                    String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(TablaContactos.COL_LONGITUD)))
+            };
+            lista.add(fila);
+        }
+        cursor.close();
+        return lista;
+    }
+
+    /**
+     * Busca los reportes que todavía no se mandaron al servidor,
+     * con todas sus columnas (para el respaldo completo).
+     *
+     * @return lista de reportes pendientes. Cada uno es:
+     *         [0] id, [1] tipo, [2] descripción, [3] latitud, [4] longitud,
+     *         [5] ruta de foto, [6] fecha (milisegundos)
+     */
+    public List<String[]> obtenerReportesSinSincronizar() {
+        List<String[]> lista = new ArrayList<>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query(
+                TablaReportes.NOMBRE_TABLA,
+                null,
+                TablaReportes.COL_SINCRONIZADO + " = ?",
+                new String[]{"0"},
+                null, null, null
+        );
+        while (cursor.moveToNext()) {
+            String[] fila = new String[]{
+                    String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(TablaReportes._ID))),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaReportes.COL_TIPO)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaReportes.COL_DESCRIPCION)),
+                    String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(TablaReportes.COL_LATITUD))),
+                    String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(TablaReportes.COL_LONGITUD))),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TablaReportes.COL_RUTA_FOTO)),
+                    String.valueOf(cursor.getLong(cursor.getColumnIndexOrThrow(TablaReportes.COL_FECHA)))
+            };
+            lista.add(fila);
+        }
+        cursor.close();
+        return lista;
+    }
 }

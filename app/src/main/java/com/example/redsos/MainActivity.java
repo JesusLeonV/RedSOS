@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         db = new RedSOSDb(this);
 
+        // Respaldamos en el servidor lo que quedó pendiente de la última vez
+        RespaldoServidor.subirPendientes(this);
+
         btnayuda = findViewById(R.id.btnayuda);
         btnbn = findViewById(R.id.btnbn);
         navInformacion = findViewById(R.id.navInformacion);
