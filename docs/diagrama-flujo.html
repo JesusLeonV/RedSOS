@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><title>Diagrama de Flujo</title></head><body style="font-family:Segoe UI,Arial,sans-serif;background:#f4f5f7;color:#212529;padding:20px"><svg width="980" height="800" style="background:#fff;border:1px solid #dee2e6;border-radius:12px;display:block"><defs><marker id="fV" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#2B8A3E"/></marker><marker id="fN" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#E67700"/></marker></defs>
+
+<text x="500" y="28" font-size="18" font-weight="bold" text-anchor="middle">Diagrama de Flujo de Pantallas</text>
+<text x="500" y="48" font-size="12" fill="#495057" text-anchor="middle">Verde = Intent explícito · Naranja = Intent implícito</text>
+
+<rect x="390" y="70" width="200" height="56" rx="10" fill="#212529"/><text x="490" y="98" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">MainActivity</text><text x="490" y="114" fill="#adb5bd" font-size="10" text-anchor="middle">pantalla principal · LAUNCHER</text>
+
+<rect x="40" y="160" width="190" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="135" y="188" font-size="12" font-weight="bold" text-anchor="middle">dialog_sos_emergency</text><text x="135" y="204" font-size="9" fill="#495057" text-anchor="middle">alerta SOS + Bundle</text>
+
+<rect x="270" y="160" width="160" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="350" y="188" font-size="12" font-weight="bold" text-anchor="middle">informacion</text><text x="350" y="204" font-size="9" fill="#495057" text-anchor="middle">perfil médico</text>
+
+<rect x="470" y="160" width="160" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="550" y="188" font-size="12" font-weight="bold" text-anchor="middle">mapa</text><text x="550" y="204" font-size="9" fill="#495057" text-anchor="middle">marcadores SQLite</text>
+
+<rect x="670" y="160" width="130" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="735" y="188" font-size="12" font-weight="bold" text-anchor="middle">contactos</text><text x="735" y="204" font-size="9" fill="#495057" text-anchor="middle">RecyclerView</text>
+
+<rect x="340" y="270" width="140" height="52" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="410" y="298" font-size="12" font-weight="bold" text-anchor="middle">auxilios</text>
+
+<rect x="470" y="290" width="200" height="68" rx="10" fill="#fff8f0" stroke="#E67700" stroke-width="1.5"/><text x="570" y="316" font-size="11" font-weight="bold" text-anchor="middle">Cámara del sistema</text><text x="570" y="332" font-size="9.5" fill="#495057" text-anchor="middle">ACTION_IMAGE_CAPTURE</text><text x="570" y="348" font-size="9.5" fill="#495057" text-anchor="middle">URI segura FileProvider</text>
+
+<rect x="710" y="290" width="140" height="68" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="780" y="318" font-size="10" font-weight="bold" text-anchor="middle">Dialog foto</text><text x="780" y="336" font-size="9" fill="#495057" text-anchor="middle">al tocar marcador</text><text x="780" y="350" font-size="9" fill="#495057" text-anchor="middle">(evidencia)</text>
+
+<rect x="670" y="400" width="170" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="755" y="428" font-size="11" font-weight="bold" text-anchor="middle">agregarcontacto</text><text x="755" y="444" font-size="9" fill="#495057" text-anchor="middle">setResult + putExtra</text>
+
+<rect x="470" y="400" width="160" height="58" rx="10" fill="#fff8f0" stroke="#E67700" stroke-width="1.5"/><text x="550" y="428" font-size="11" font-weight="bold" text-anchor="middle">Marcador teléfono</text><text x="550" y="444" font-size="9" fill="#495057" text-anchor="middle">ACTION_DIAL (implícito)</text>
+
+<rect x="40" y="400" width="190" height="58" rx="10" fill="#fff" stroke="#C92A2A" stroke-width="1.5"/><text x="135" y="428" font-size="11" font-weight="bold" text-anchor="middle">Acelerómetro</text><text x="135" y="444" font-size="9" fill="#495057" text-anchor="middle">sacudida &gt; 15</text>
+
+<rect x="40" y="500" width="190" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="135" y="528" font-size="11" font-weight="bold" text-anchor="middle">Check-in: ¿estás bien?</text><text x="135" y="544" font-size="9" fill="#495057" text-anchor="middle">estoy bien / necesita ayuda</text>
+
+<rect x="40" y="590" width="190" height="44" rx="10" fill="#eaf5ec" stroke="#2B8A3E" stroke-width="1.5"/><text x="135" y="618" font-size="10" font-weight="bold" text-anchor="middle" fill="#1B7A2E">guarda en SQLite</text>
+
+<rect x="340" y="590" width="220" height="44" rx="10" fill="#eaf5ec" stroke="#2B8A3E" stroke-width="1.5"/><text x="450" y="618" font-size="10" font-weight="bold" text-anchor="middle" fill="#1B7A2E">insertarReporte → marcador mapa</text>
+
+<line x1="490" y1="126" x2="230" y2="158" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+<line x1="490" y1="126" x2="430" y2="158" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+<line x1="590" y1="126" x2="550" y2="158" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+<line x1="490" y1="70" x2="735" y2="158" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+<line x1="410" y1="118" x2="410" y2="268" stroke="#2B8A3E" stroke-width="1.6" marker-end="url(#fV)"/>
+<line x1="490" y1="116" x2="490" y2="288" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+
+<line x1="550" y1="218" x2="550" y2="288" stroke="#E67700" stroke-width="1.8" marker-end="url(#fN)"/>
+<text x="558" y="254" font-size="9" fill="#E67700" font-weight="bold">foto</text>
+<line x1="670" y1="324" x2="708" y2="324" stroke="#E67700" stroke-width="1.8" marker-end="url(#fN)"/>
+
+<line x1="410" y1="326" x2="410" y2="588" stroke="#2B8A3E" stroke-width="1.6" marker-end="url(#fV)"/>
+<line x1="250" y1="612" x2="338" y2="612" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+
+<line x1="735" y1="218" x2="735" y2="398" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+<line x1="840" y1="458" x2="840" y2="480" stroke="#2B8A3E" stroke-width="1.5" marker-end="url(#fV)"/>
+
+<line x1="135" y1="458" x2="135" y2="498" stroke="#C92A2A" stroke-width="1.8" marker-end="url(#fN)"/>
+<line x1="135" y1="558" x2="135" y2="588" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+
+<text x="180" y="130" font-size="10" fill="#2B8A3E" font-weight="bold">explícitos</text></svg></body></html>

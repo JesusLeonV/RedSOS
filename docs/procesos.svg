@@ -1,0 +1,259 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 1200" width="1260" height="1200" font-family="Segoe UI, Roboto, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#455A64"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07B00"/></marker>
+    <style>
+      .pnl{fill:#FAFBFC;stroke:#CFD8DC;stroke-width:1}
+      .pt{font-size:15px;font-weight:700;fill:#263238}
+      .ini{fill:#ECEFF1;stroke:#37474F;stroke-width:1.5}
+      .pr{fill:#FFFFFF;stroke:#37474F;stroke-width:1.5}
+      .dec{fill:#FFFFFF;stroke:#37474F;stroke-width:1.5}
+      .ext{fill:#FFF4E5;stroke:#E07B00;stroke-width:1.6;stroke-dasharray:6 4}
+      .t{font-size:12.5px;fill:#263238}
+      .tb{font-size:12.5px;fill:#263238;font-weight:700}
+      .s{font-size:11px;fill:#616161}
+      .sm{font-size:11.5px;fill:#263238}
+      .lb{font-size:11.5px;fill:#263238;font-weight:600}
+      .ar{stroke:#455A64;stroke-width:1.5;fill:none}
+      .arO{stroke:#E07B00;stroke-width:1.8;fill:none}
+    </style>
+  </defs>
+
+  <rect width="1260" height="1200" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="26" font-weight="700" fill="#263238">Diagrama de Procesos</text>
+  <text x="40" y="70" font-size="14" fill="#616161">RedSOS — procesos principales de la aplicación móvil</text>
+  <line x1="40" y1="86" x2="1220" y2="86" stroke="#CFD8DC"/>
+
+  <!-- ============ 1. Alerta SOS ============ -->
+  <g transform="translate(40,110)">
+    <rect width="280" height="400" rx="8" class="pnl"/>
+    <text x="16" y="28" class="pt">1. Alerta SOS</text>
+    <line x1="16" y1="40" x2="264" y2="40" stroke="#CFD8DC"/>
+    <g transform="translate(0,60)">
+      <rect x="20" y="0" width="240" height="34" rx="17" class="ini"/>
+      <text x="140" y="22" text-anchor="middle" class="t">Usuario presiona btnayuda</text>
+      <line x1="140" y1="34" x2="140" y2="52" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="54" width="230" height="48" rx="4" class="pr"/>
+      <text x="140" y="74" text-anchor="middle" class="t">Abre dialog_sos_emergency</text>
+      <text x="140" y="92" text-anchor="middle" class="s">Intent explícito + Bundle con lat/lon</text>
+      <line x1="140" y1="102" x2="140" y2="120" class="ar" marker-end="url(#a)"/>
+      <polygon points="140,122 200,152 140,182 80,152" class="dec"/>
+      <text x="140" y="156" text-anchor="middle" class="t">¿Opción?</text>
+      <path d="M80,152 H75 V200" class="ar" marker-end="url(#a)"/>
+      <path d="M200,152 H205 V200" class="ar" marker-end="url(#a)"/>
+      <rect x="12" y="202" width="125" height="58" rx="4" class="pr"/>
+      <text x="74.5" y="220" text-anchor="middle" class="tb">btn_cancelar</text>
+      <text x="74.5" y="236" text-anchor="middle" class="sm">vuelve</text>
+      <text x="74.5" y="252" text-anchor="middle" class="sm">(finish)</text>
+      <rect x="143" y="202" width="125" height="58" rx="4" class="pr"/>
+      <text x="205.5" y="220" text-anchor="middle" class="tb">botones SOS</text>
+      <text x="205.5" y="236" text-anchor="middle" class="sm">guarda reporte en BD</text>
+      <text x="205.5" y="252" text-anchor="middle" class="sm">→ finish</text>
+      <path d="M75,260 V275 H140" class="ar"/>
+      <path d="M205,260 V275 H140 V290" class="ar" marker-end="url(#a)"/>
+      <rect x="80" y="292" width="120" height="32" rx="16" class="ini"/>
+      <text x="140" y="313" text-anchor="middle" class="t">Fin</text>
+    </g>
+  </g>
+
+  <!-- ============ 2. Estoy bien ============ -->
+  <g transform="translate(340,110)">
+    <rect width="280" height="400" rx="8" class="pnl"/>
+    <text x="16" y="28" class="pt">2. Estado “Estoy bien”</text>
+    <line x1="16" y1="40" x2="264" y2="40" stroke="#CFD8DC"/>
+    <g transform="translate(0,60)">
+      <rect x="20" y="0" width="240" height="34" rx="17" class="ini"/>
+      <text x="140" y="22" text-anchor="middle" class="t">Usuario presiona btnbn</text>
+      <line x1="140" y1="34" x2="140" y2="52" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="54" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="77" text-anchor="middle" class="t">Guarda “Estoy bien” en la BD</text>
+      <line x1="140" y1="90" x2="140" y2="108" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="110" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="133" text-anchor="middle" class="t">No cambia de pantalla</text>
+      <line x1="140" y1="146" x2="140" y2="164" class="ar" marker-end="url(#a)"/>
+      <rect x="80" y="166" width="120" height="32" rx="16" class="ini"/>
+      <text x="140" y="187" text-anchor="middle" class="t">Fin</text>
+    </g>
+  </g>
+
+  <!-- ============ 3. Check-in por sacudida ============ -->
+  <g transform="translate(640,110)">
+    <rect width="280" height="400" rx="8" class="pnl"/>
+    <text x="16" y="28" class="pt">3. Check-in por acelerómetro</text>
+    <line x1="16" y1="40" x2="264" y2="40" stroke="#CFD8DC"/>
+    <g transform="translate(0,60)">
+      <rect x="20" y="0" width="240" height="34" rx="17" class="ini"/>
+      <text x="140" y="22" text-anchor="middle" class="t">MainActivity detecta sacudida fuerte</text>
+      <line x1="140" y1="34" x2="140" y2="52" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="54" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="77" text-anchor="middle" class="t">Muestra diálogo check-in</text>
+      <line x1="140" y1="90" x2="140" y2="108" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="110" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="133" text-anchor="middle" class="t">Guarda estado en BD</text>
+      <line x1="140" y1="146" x2="140" y2="164" class="ar" marker-end="url(#a)"/>
+      <rect x="80" y="166" width="120" height="32" rx="16" class="ini"/>
+      <text x="140" y="187" text-anchor="middle" class="t">Fin</text>
+    </g>
+  </g>
+
+  <!-- ============ 4. Guardar perfil ============ -->
+  <g transform="translate(940,110)">
+    <rect width="280" height="400" rx="8" class="pnl"/>
+    <text x="16" y="28" class="pt">4. Guardar perfil</text>
+    <line x1="16" y1="40" x2="264" y2="40" stroke="#CFD8DC"/>
+    <g transform="translate(0,60)">
+      <rect x="20" y="0" width="240" height="34" rx="17" class="ini"/>
+      <text x="140" y="22" text-anchor="middle" class="t">Usuario toca navInformacion</text>
+      <line x1="140" y1="34" x2="140" y2="52" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="54" width="230" height="44" rx="4" class="pr"/>
+      <text x="140" y="73" text-anchor="middle" class="t">Abre informacion</text>
+      <text x="140" y="90" text-anchor="middle" class="s">Intent explícito</text>
+      <line x1="140" y1="98" x2="140" y2="116" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="118" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="141" text-anchor="middle" class="t">Presiona guardar</text>
+      <line x1="140" y1="154" x2="140" y2="172" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="174" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="197" text-anchor="middle" class="t">Guarda perfil</text>
+      <line x1="140" y1="210" x2="140" y2="228" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="230" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="253" text-anchor="middle" class="t">setResult + finish</text>
+      <line x1="140" y1="266" x2="140" y2="284" class="ar" marker-end="url(#a)"/>
+      <rect x="80" y="286" width="120" height="32" rx="16" class="ini"/>
+      <text x="140" y="307" text-anchor="middle" class="t">Fin</text>
+    </g>
+  </g>
+
+  <!-- ============ 5. Reportar en el mapa ============ -->
+  <g transform="translate(40,530)">
+    <rect width="580" height="600" rx="8" class="pnl"/>
+    <text x="16" y="28" class="pt">5. Crear reporte en el mapa</text>
+    <line x1="16" y1="40" x2="564" y2="40" stroke="#CFD8DC"/>
+    <g transform="translate(0,60)">
+      <rect x="30" y="0" width="240" height="34" rx="17" class="ini"/>
+      <text x="150" y="22" text-anchor="middle" class="t">Usuario toca navMapa</text>
+      <line x1="150" y1="34" x2="150" y2="52" class="ar" marker-end="url(#a)"/>
+      <rect x="35" y="54" width="230" height="44" rx="4" class="pr"/>
+      <text x="150" y="73" text-anchor="middle" class="t">Abre mapa</text>
+      <text x="150" y="90" text-anchor="middle" class="s">Intent explícito</text>
+      <line x1="150" y1="98" x2="150" y2="116" class="ar" marker-end="url(#a)"/>
+      <rect x="35" y="118" width="230" height="36" rx="4" class="pr"/>
+      <text x="150" y="141" text-anchor="middle" class="t">Presiona fabReportar</text>
+      <line x1="150" y1="154" x2="150" y2="172" class="ar" marker-end="url(#a)"/>
+      <rect x="35" y="174" width="230" height="36" rx="4" class="pr"/>
+      <text x="150" y="197" text-anchor="middle" class="t">Elige tipo</text>
+      <line x1="150" y1="210" x2="150" y2="228" class="ar" marker-end="url(#a)"/>
+      <polygon points="150,230 220,260 150,290 80,260" class="dec"/>
+      <text x="150" y="264" text-anchor="middle" class="t">¿Foto?</text>
+
+      <!-- Sí -->
+      <line x1="220" y1="260" x2="313" y2="260" class="arO" marker-end="url(#aO)"/>
+      <text x="266" y="252" text-anchor="middle" class="lb">Sí · 📷 Tomar foto</text>
+      <text x="266" y="276" text-anchor="middle" class="s">Intent implícito</text>
+      <rect x="315" y="230" width="230" height="60" rx="6" class="ext"/>
+      <text x="430" y="250" text-anchor="middle" class="tb">CÁMARA</text>
+      <text x="430" y="267" text-anchor="middle" class="sm">ACTION_IMAGE_CAPTURE</text>
+      <text x="430" y="282" text-anchor="middle" class="sm">+ FileProvider URI</text>
+      <line x1="430" y1="290" x2="430" y2="308" class="ar" marker-end="url(#a)"/>
+      <rect x="315" y="310" width="230" height="36" rx="4" class="pr"/>
+      <text x="430" y="333" text-anchor="middle" class="t">Foto lista</text>
+      <path d="M430,346 V398 H267" class="ar" marker-end="url(#a)"/>
+
+      <!-- No -->
+      <line x1="150" y1="290" x2="150" y2="378" class="ar" marker-end="url(#a)"/>
+      <text x="158" y="322" class="lb">No</text>
+
+      <rect x="35" y="380" width="230" height="36" rx="4" class="pr"/>
+      <text x="150" y="403" text-anchor="middle" class="t">Guarda en BD</text>
+      <line x1="150" y1="416" x2="150" y2="434" class="ar" marker-end="url(#a)"/>
+      <rect x="35" y="436" width="230" height="36" rx="4" class="pr"/>
+      <text x="150" y="459" text-anchor="middle" class="t">Muestra marcador nuevo</text>
+      <line x1="150" y1="472" x2="150" y2="490" class="ar" marker-end="url(#a)"/>
+      <rect x="90" y="492" width="120" height="32" rx="16" class="ini"/>
+      <text x="150" y="513" text-anchor="middle" class="t">Fin</text>
+    </g>
+  </g>
+
+  <!-- ============ 6. Agregar contacto ============ -->
+  <g transform="translate(640,530)">
+    <rect width="280" height="600" rx="8" class="pnl"/>
+    <text x="16" y="28" class="pt">6. Agregar contacto</text>
+    <line x1="16" y1="40" x2="264" y2="40" stroke="#CFD8DC"/>
+    <g transform="translate(0,60)">
+      <rect x="20" y="0" width="240" height="34" rx="17" class="ini"/>
+      <text x="140" y="22" text-anchor="middle" class="t">Usuario toca navContactos</text>
+      <line x1="140" y1="34" x2="140" y2="52" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="54" width="230" height="44" rx="4" class="pr"/>
+      <text x="140" y="73" text-anchor="middle" class="t">Abre contactos</text>
+      <text x="140" y="90" text-anchor="middle" class="s">Intent explícito</text>
+      <line x1="140" y1="98" x2="140" y2="116" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="118" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="141" text-anchor="middle" class="t">Presiona btnAgregarContacto</text>
+      <line x1="140" y1="154" x2="140" y2="172" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="174" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="197" text-anchor="middle" class="t">Abre agregarcontacto</text>
+      <line x1="140" y1="210" x2="140" y2="228" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="230" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="253" text-anchor="middle" class="t">Presiona guardar</text>
+      <line x1="140" y1="266" x2="140" y2="284" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="286" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="309" text-anchor="middle" class="t">setResult (putExtra) → finish</text>
+      <line x1="140" y1="322" x2="140" y2="340" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="342" width="230" height="44" rx="4" class="pr"/>
+      <text x="140" y="361" text-anchor="middle" class="t">contactos recarga la lista</text>
+      <text x="140" y="378" text-anchor="middle" class="s">onResume</text>
+      <line x1="140" y1="386" x2="140" y2="404" class="ar" marker-end="url(#a)"/>
+      <rect x="80" y="406" width="120" height="32" rx="16" class="ini"/>
+      <text x="140" y="427" text-anchor="middle" class="t">Fin</text>
+    </g>
+  </g>
+
+  <!-- ============ 7. Llamar contacto  /  8. Ver foto ============ -->
+  <g transform="translate(940,530)">
+    <rect width="280" height="285" rx="8" class="pnl"/>
+    <text x="16" y="28" class="pt">7. Llamar a un contacto</text>
+    <line x1="16" y1="40" x2="264" y2="40" stroke="#CFD8DC"/>
+    <g transform="translate(0,60)">
+      <rect x="20" y="0" width="240" height="34" rx="17" class="ini"/>
+      <text x="140" y="22" text-anchor="middle" class="t">En contactos: presiona btnLlamar</text>
+      <line x1="140" y1="34" x2="140" y2="66" class="arO" marker-end="url(#aO)"/>
+      <text x="148" y="54" class="s">Intent implícito</text>
+      <rect x="25" y="68" width="230" height="50" rx="6" class="ext"/>
+      <text x="140" y="89" text-anchor="middle" class="tb">MARCADOR DE TELÉFONO</text>
+      <text x="140" y="107" text-anchor="middle" class="sm">ACTION_DIAL</text>
+      <line x1="140" y1="118" x2="140" y2="136" class="ar" marker-end="url(#a)"/>
+      <rect x="80" y="138" width="120" height="32" rx="16" class="ini"/>
+      <text x="140" y="159" text-anchor="middle" class="t">Fin</text>
+    </g>
+  </g>
+  <g transform="translate(940,835)">
+    <rect width="280" height="295" rx="8" class="pnl"/>
+    <text x="16" y="28" class="pt">8. Ver foto de un reporte</text>
+    <line x1="16" y1="40" x2="264" y2="40" stroke="#CFD8DC"/>
+    <g transform="translate(0,60)">
+      <rect x="20" y="0" width="240" height="34" rx="17" class="ini"/>
+      <text x="140" y="22" text-anchor="middle" class="t">En mapa: toca marcador con foto</text>
+      <line x1="140" y1="34" x2="140" y2="52" class="ar" marker-end="url(#a)"/>
+      <rect x="25" y="54" width="230" height="36" rx="4" class="pr"/>
+      <text x="140" y="77" text-anchor="middle" class="t">Muestra la foto</text>
+      <line x1="140" y1="90" x2="140" y2="108" class="ar" marker-end="url(#a)"/>
+      <rect x="80" y="110" width="120" height="32" rx="16" class="ini"/>
+      <text x="140" y="131" text-anchor="middle" class="t">Fin</text>
+    </g>
+  </g>
+
+  <!-- Leyenda -->
+  <g transform="translate(40,1165)">
+    <rect x="0" y="-11" width="40" height="22" rx="11" class="ini"/>
+    <text x="48" y="4" class="t">Inicio / Fin</text>
+    <rect x="150" y="-11" width="40" height="22" rx="3" class="pr"/>
+    <text x="198" y="4" class="t">Proceso</text>
+    <polygon points="290,-12 310,0 290,12 270,0" class="dec"/>
+    <text x="318" y="4" class="t">Decisión</text>
+    <rect x="410" y="-11" width="40" height="22" rx="4" class="ext"/>
+    <text x="458" y="4" class="t">Destino de Intent implícito</text>
+    <line x1="650" y1="0" x2="690" y2="0" class="arO" marker-end="url(#aO)"/>
+    <text x="698" y="4" class="t">Intent implícito (cámara y teléfono)</text>
+    <line x1="940" y1="0" x2="980" y2="0" class="ar" marker-end="url(#a)"/>
+    <text x="988" y="4" class="t">Secuencia</text>
+  </g>
+</svg>

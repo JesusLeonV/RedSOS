@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1310 800" width="1310" height="800" font-family="Segoe UI, Roboto, Arial, sans-serif">
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07B00"/></marker>
+    <marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#757575"/></marker>
+    <style>
+      .scr{fill:#FFFFFF;stroke:#37474F;stroke-width:1.8}
+      .ext{fill:#FFF4E5;stroke:#E07B00;stroke-width:1.8;stroke-dasharray:6 4}
+      .act{fill:#F1F3F4;stroke:#B0BEC5;stroke-width:1}
+      .name{font-size:14px;font-weight:700;fill:#263238}
+      .txt{font-size:12.5px;fill:#37474F}
+      .lbl{font-size:11.5px;fill:#263238;font-weight:600}
+      .sub{font-size:11px;fill:#616161}
+      .eG{stroke:#2E7D32;stroke-width:2;fill:none}
+      .eO{stroke:#E07B00;stroke-width:2;fill:none}
+      .eK{stroke:#757575;stroke-width:1.5;fill:none;stroke-dasharray:5 4}
+    </style>
+  </defs>
+
+  <rect width="1310" height="800" fill="#FFFFFF"/>
+  <text x="30" y="40" font-size="24" font-weight="700" fill="#263238">Diagrama de Flujo de Pantallas</text>
+  <text x="30" y="63" font-size="13.5" fill="#616161">Estructura de la aplicación móvil (RedSOS)</text>
+  <line x1="30" y1="78" x2="1280" y2="78" stroke="#CFD8DC"/>
+
+  <g transform="translate(0,80)">
+    <!-- MainActivity: caja compacta, sin ocupar toda la altura -->
+    <rect x="30" y="20" width="170" height="170" rx="8" class="scr"/>
+    <text x="115" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#263238">MainActivity</text>
+    <text x="115" y="67" text-anchor="middle" class="txt" style="font-size:11px">pantalla principal</text>
+    <text x="115" y="83" text-anchor="middle" class="sub" style="font-size:10.5px">(LAUNCHER)</text>
+    <line x1="44" y1="99" x2="186" y2="99" stroke="#B0BEC5"/>
+    <text x="115" y="119" text-anchor="middle" class="lbl" style="font-size:10.5px">Escucha el acelerómetro</text>
+    <text x="115" y="137" text-anchor="middle" class="txt" style="font-size:10.5px">sacudida fuerte</text>
+    <text x="115" y="154" text-anchor="middle" class="txt" style="font-size:10.5px">→ diálogo check-in</text>
+    <text x="115" y="171" text-anchor="middle" class="txt" style="font-size:10.5px">→ guarda estado en BD</text>
+
+    <!-- Tronco de salida: sale de la caja y alimenta todas las ramas por fuera -->
+    <path d="M200,105 H240" class="eG"/>
+    <path d="M240,55 V620" class="eG"/>
+    <!-- dialog_sos_emergency -->
+    <line x1="240" y1="55" x2="398" y2="55" class="eG" marker-end="url(#aG)"/>
+    <text x="319" y="47" text-anchor="middle" class="lbl">btnayuda</text>
+    <text x="319" y="70" text-anchor="middle" class="sub">Intent EXPLÍCITO</text>
+    <text x="319" y="84" text-anchor="middle" class="sub">+ Bundle con lat/lon</text>
+    <rect x="400" y="20" width="190" height="70" rx="7" class="scr"/>
+    <text x="495" y="60" text-anchor="middle" class="name">dialog_sos_emergency</text>
+
+    <line x1="590" y1="38" x2="718" y2="38" class="eK" marker-end="url(#aK)"/>
+    <text x="655" y="31" text-anchor="middle" class="lbl">btn_cancelar</text>
+    <rect x="720" y="23" width="240" height="30" rx="5" class="act"/>
+    <text x="840" y="42" text-anchor="middle" class="txt">vuelve (finish)</text>
+
+    <line x1="590" y1="72" x2="718" y2="72" class="eK" marker-end="url(#aK)"/>
+    <text x="655" y="65" text-anchor="middle" class="lbl">botones SOS</text>
+    <rect x="720" y="57" width="240" height="30" rx="5" class="act"/>
+    <text x="840" y="76" text-anchor="middle" class="txt">guarda reporte en BD → finish</text>
+
+    <!-- btnbn -->
+    <line x1="240" y1="130" x2="398" y2="130" class="eK" marker-end="url(#aK)"/>
+    <text x="319" y="122" text-anchor="middle" class="lbl">btnbn</text>
+    <rect x="400" y="112" width="340" height="36" rx="5" class="act"/>
+    <text x="570" y="134" text-anchor="middle" class="txt">guarda “Estoy bien” en la BD (no cambia de pantalla)</text>
+
+    <!-- informacion -->
+    <line x1="240" y1="200" x2="398" y2="200" class="eG" marker-end="url(#aG)"/>
+    <text x="319" y="192" text-anchor="middle" class="lbl">navInformacion</text>
+    <text x="319" y="215" text-anchor="middle" class="sub">Intent EXPLÍCITO</text>
+    <rect x="400" y="176" width="190" height="48" rx="7" class="scr"/>
+    <text x="495" y="205" text-anchor="middle" class="name">informacion</text>
+
+    <line x1="590" y1="200" x2="718" y2="200" class="eK" marker-end="url(#aK)"/>
+    <text x="655" y="193" text-anchor="middle" class="lbl">guardar</text>
+    <rect x="720" y="184" width="240" height="32" rx="5" class="act"/>
+    <text x="840" y="204" text-anchor="middle" class="txt">guarda perfil → setResult + finish</text>
+    <!-- mapa -->
+    <line x1="240" y1="321" x2="398" y2="321" class="eG" marker-end="url(#aG)"/>
+    <text x="319" y="313" text-anchor="middle" class="lbl">navMapa</text>
+    <text x="319" y="336" text-anchor="middle" class="sub">Intent EXPLÍCITO</text>
+    <rect x="400" y="256" width="190" height="130" rx="7" class="scr"/>
+    <text x="495" y="326" text-anchor="middle" class="name">mapa</text>
+
+    <line x1="590" y1="286" x2="718" y2="286" class="eK" marker-end="url(#aK)"/>
+    <text x="655" y="279" text-anchor="middle" class="lbl">fabReportar</text>
+    <rect x="720" y="268" width="240" height="36" rx="5" class="act"/>
+    <text x="840" y="290" text-anchor="middle" class="txt">elige tipo → ¿foto?</text>
+
+    <line x1="960" y1="286" x2="1058" y2="286" class="eO" marker-end="url(#aO)"/>
+    <text x="1009" y="279" text-anchor="middle" class="lbl">📷 Tomar foto</text>
+    <text x="1009" y="301" text-anchor="middle" class="sub">Intent IMPLÍCITO</text>
+    <rect x="1060" y="252" width="220" height="68" rx="7" class="ext"/>
+    <text x="1170" y="274" text-anchor="middle" class="name">CÁMARA</text>
+    <text x="1170" y="293" text-anchor="middle" class="txt">ACTION_IMAGE_CAPTURE</text>
+    <text x="1170" y="310" text-anchor="middle" class="txt">+ FileProvider URI</text>
+
+    <line x1="1170" y1="320" x2="1170" y2="346" class="eK" marker-end="url(#aK)"/>
+    <text x="1180" y="337" class="lbl">foto lista</text>
+    <rect x="1060" y="348" width="220" height="34" rx="5" class="act"/>
+    <text x="1170" y="369" text-anchor="middle" class="txt">guarda en BD → marcador nuevo</text>
+
+    <line x1="590" y1="364" x2="718" y2="364" class="eK" marker-end="url(#aK)"/>
+    <text x="655" y="342" text-anchor="middle" class="lbl">tocar marcador</text>
+    <text x="655" y="356" text-anchor="middle" class="lbl">con foto</text>
+    <rect x="720" y="348" width="240" height="32" rx="5" class="act"/>
+    <text x="840" y="368" text-anchor="middle" class="txt">muestra la foto</text>
+    <!-- contactos -->
+    <line x1="240" y1="481" x2="398" y2="481" class="eG" marker-end="url(#aG)"/>
+    <text x="319" y="473" text-anchor="middle" class="lbl">navContactos</text>
+    <text x="319" y="496" text-anchor="middle" class="sub">Intent EXPLÍCITO</text>
+    <rect x="400" y="416" width="190" height="130" rx="7" class="scr"/>
+    <text x="495" y="486" text-anchor="middle" class="name">contactos</text>
+
+    <line x1="590" y1="446" x2="718" y2="446" class="eO" marker-end="url(#aO)"/>
+    <text x="655" y="425" text-anchor="middle" class="lbl">btnLlamar</text>
+    <text x="655" y="439" text-anchor="middle" class="lbl">(cualquiera)</text>
+    <text x="655" y="461" text-anchor="middle" class="sub">Intent IMPLÍCITO</text>
+    <rect x="720" y="422" width="240" height="48" rx="7" class="ext"/>
+    <text x="840" y="442" text-anchor="middle" class="name">MARCADOR DE TELÉFONO</text>
+    <text x="840" y="460" text-anchor="middle" class="txt">ACTION_DIAL</text>
+
+    <line x1="590" y1="520" x2="718" y2="520" class="eG" marker-end="url(#aG)"/>
+    <text x="655" y="512" text-anchor="middle" class="lbl">btnAgregarContacto</text>
+    <rect x="720" y="500" width="240" height="40" rx="7" class="scr"/>
+    <text x="840" y="525" text-anchor="middle" class="name">agregarcontacto</text>
+
+    <line x1="960" y1="520" x2="1058" y2="520" class="eK" marker-end="url(#aK)"/>
+    <text x="1009" y="512" text-anchor="middle" class="lbl">guardar</text>
+    <rect x="1060" y="500" width="220" height="40" rx="5" class="act"/>
+    <text x="1170" y="524" text-anchor="middle" class="txt">setResult (putExtra) → finish</text>
+
+    <path d="M1170,540 V570 H495 V548" class="eK" marker-end="url(#aK)"/>
+    <text x="830" y="564" text-anchor="middle" class="lbl">contactos recarga la lista (onResume)</text>
+
+    <!-- auxilios -->
+    <line x1="240" y1="620" x2="398" y2="620" class="eG" marker-end="url(#aG)"/>
+    <text x="319" y="612" text-anchor="middle" class="lbl">navAuxilios</text>
+    <text x="319" y="635" text-anchor="middle" class="sub">Intent EXPLÍCITO</text>
+    <rect x="400" y="596" width="190" height="48" rx="7" class="scr"/>
+    <text x="495" y="625" text-anchor="middle" class="name">auxilios</text>
+
+    <!-- Leyenda -->
+    <line x1="30" y1="672" x2="1280" y2="672" stroke="#CFD8DC"/>
+    <g transform="translate(30,700)">
+      <line x1="0" y1="0" x2="40" y2="0" class="eG" marker-end="url(#aG)"/>
+      <text x="48" y="4" class="txt">Intent explícito</text>
+      <line x1="170" y1="0" x2="210" y2="0" class="eO" marker-end="url(#aO)"/>
+      <text x="218" y="4" class="txt">Intent implícito (cámara y teléfono)</text>
+      <line x1="460" y1="0" x2="500" y2="0" class="eK" marker-end="url(#aK)"/>
+      <text x="508" y="4" class="txt">Acción / retorno</text>
+      <rect x="650" y="-10" width="32" height="20" rx="4" class="scr"/>
+      <text x="690" y="4" class="txt">Pantalla de la app</text>
+      <rect x="830" y="-10" width="32" height="20" rx="4" class="ext"/>
+      <text x="870" y="4" class="txt">Destino de Intent implícito</text>
+      <rect x="1050" y="-10" width="32" height="20" rx="4" class="act"/>
+      <text x="1090" y="4" class="txt">Acción / resultado</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><title>Casos de Uso RedSOS</title></head><body style="font-family:Segoe UI,Arial,sans-serif;background:#f4f5f7;color:#212529;padding:20px"><svg width="980" height="700" style="background:#fff;border:1px solid #dee2e6;border-radius:12px;display:block"><defs><marker id="fU" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#495057"/></marker></defs>
+
+<text x="490" y="26" font-size="18" font-weight="bold" text-anchor="middle">Diagrama de Casos de Uso</text>
+<text x="490" y="46" font-size="12" fill="#495057" text-anchor="middle">Actores y acciones del sistema RedSOS</text>
+
+<rect x="300" y="30" width="640" height="640" rx="16" fill="#fbfcfe" stroke="#212529" stroke-width="1.6"/><text x="620" y="60" font-size="15" font-weight="bold" text-anchor="middle">Sistema RedSOS</text>
+
+<!-- Actor Usuario -->
+<circle cx="120" cy="180" r="24" fill="#212529"/><line x1="120" y1="204" x2="120" y2="254" stroke="#212529" stroke-width="3"/><line x1="88" y1="224" x2="152" y2="224" stroke="#212529" stroke-width="3"/><line x1="120" y1="254" x2="95" y2="302" stroke="#212529" stroke-width="3"/><line x1="120" y1="254" x2="145" y2="302" stroke="#212529" stroke-width="3"/><text x="120" y="336" font-size="14" font-weight="bold" text-anchor="middle">Usuario</text>
+
+<!-- Actor Acelerometro -->
+<circle cx="120" cy="420" r="24" fill="#C92A2A"/><line x1="120" y1="444" x2="120" y2="494" stroke="#C92A2A" stroke-width="3"/><line x1="88" y1="464" x2="152" y2="464" stroke="#C92A2A" stroke-width="3"/><line x1="120" y1="494" x2="95" y2="542" stroke="#C92A2A" stroke-width="3"/><line x1="120" y1="494" x2="145" y2="542" stroke="#C92A2A" stroke-width="3"/><text x="120" y="576" font-size="13" font-weight="bold" text-anchor="middle">Acelerómetro</text><text x="120" y="594" font-size="10" fill="#868e96" text-anchor="middle">sensor de hardware</text>
+
+<!-- Casos de uso -->
+<ellipse cx="580" cy="100" rx="150" ry="30" fill="#fff" stroke="#C92A2A" stroke-width="1.8"/><text x="580" y="106" font-size="13" font-weight="bold" text-anchor="middle">Emitir alerta SOS</text>
+<ellipse cx="580" cy="175" rx="150" ry="30" fill="#fff" stroke="#212529" stroke-width="1.4"/><text x="580" y="180" font-size="12" text-anchor="middle">Reportar incidente con foto</text>
+<ellipse cx="580" cy="250" rx="150" ry="30" fill="#fff" stroke="#212529" stroke-width="1.4"/><text x="580" y="255" font-size="12" text-anchor="middle">Ver mapa de emergencias</text>
+<ellipse cx="580" cy="325" rx="150" ry="30" fill="#fff" stroke="#212529" stroke-width="1.4"/><text x="580" y="330" font-size="12" text-anchor="middle">Gestionar contactos (CRUD)</text>
+<ellipse cx="580" cy="400" rx="150" ry="30" fill="#fff" stroke="#212529" stroke-width="1.4"/><text x="580" y="410" font-size="12" text-anchor="middle">Llamar a contacto / emergencia</text>
+<ellipse cx="580" cy="480" rx="150" ry="30" fill="#fff" stroke="#212529" stroke-width="1.4"/><text x="580" y="485" font-size="12" text-anchor="middle">Editar perfil con datos médicos</text>
+<ellipse cx="580" cy="555" rx="150" ry="30" fill="#fff" stroke="#212529" stroke-width="1.4"/><text x="580" y="560" font-size="12" text-anchor="middle">Consultar guías de auxilio</text>
+
+<!-- Caso de uso sensor -->
+<ellipse cx="580" cy="625" rx="150" ry="30" fill="#fff" stroke="#C92A2A" stroke-width="1.8"/><text x="580" y="630" font-size="13" font-weight="bold" text-anchor="middle">Confirmar check-in de seguridad</text>
+
+<!-- Líneas usuario -->
+<line x1="144" y1="200" x2="430" y2="100" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/><line x1="144" y1="216" x2="430" y2="175" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/><line x1="144" y1="232" x2="430" y2="247" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/><line x1="144" y1="248" x2="430" y2="322" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/><line x1="144" y1="264" x2="430" y2="397" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/><line x1="144" y1="280" x2="430" y2="472" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/><line x1="144" y1="296" x2="430" y2="547" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/>
+
+<!-- Línea sensor -->
+<line x1="144" y1="460" x2="448" y2="610" stroke="#C92A2A" stroke-width="1.8" marker-end="url(#fU)"/><text x="260" y="550" font-size="10.5" fill="#C92A2A" font-weight="bold">detecta sacudida fuerte</text>
+
+<!-- Asociaciones entre casos de uso -->
+<line x1="530" y1="130" x2="530" y2="155" stroke="#adb5bd" stroke-width="1" marker-end="url(#fU)"/><line x1="530" y1="205" x2="530" y2="230" stroke="#adb5bd" stroke-width="1" marker-end="url(#fU)"/><line x1="430" y1="355" x2="450" y2="355" stroke="#adb5bd" stroke-width="1" marker-end="url(#fU)"/><line x1="430" y1="430" x2="450" y2="430" stroke="#adb5bd" stroke-width="1" marker-end="url(#fU)"/><line x1="430" y1="510" x2="450" y2="510" stroke="#adb5bd" stroke-width="1" marker-end="url(#fU)"/><line x1="430" y1="585" x2="450" y2="585" stroke="#adb5bd" stroke-width="1" marker-end="url(#fU)"/></svg></body></html>

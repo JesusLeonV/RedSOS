@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Diagramas RedSOS</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI', Arial, sans-serif; background:#f4f5f7; padding:30px; color:#212529; }
+  .seccion { background:#fff; border:1px solid #dee2e6; border-radius:14px; padding:28px; margin-bottom:40px; }
+  .seccion h1 { font-size:20px; margin-bottom:4px; }
+  .seccion .sub { color:#495057; font-size:13px; margin-bottom:18px; }
+  svg { display:block; }
+  text { font-family:'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+
+<!-- ============ 1. DIAGRAMA DE FLUJO ============ -->
+<div class="seccion" id="flujo">
+  <h1>Diagrama de Flujo de Pantallas (UI Flow)</h1>
+  <div class="sub">Verde = Intent explícito · Naranja = Intent implícito</div>
+  <svg width="920" height="760" viewBox="0 0 920 760">
+    <defs>
+      <marker id="fV" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#2B8A3E"/></marker>
+      <marker id="fN" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#E67700"/></marker>
+    </defs>
+
+    <!-- MainActivity -->
+    <rect x="360" y="20" width="200" height="60" rx="10" fill="#212529"/>
+    <text x="460" y="47" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">MainActivity</text>
+    <text x="460" y="66" fill="#adb5bd" font-size="10" text-anchor="middle">(pantalla principal · LAUNCHER)</text>
+
+    <!-- dialog_sos -->
+    <rect x="60" y="160" width="190" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="155" y="186" font-size="13" font-weight="bold" text-anchor="middle">dialog_sos_emergency</text>
+    <text x="155" y="204" font-size="10" fill="#495057" text-anchor="middle">recibe Bundle (lat, lon)</text>
+
+    <!-- informacion -->
+    <rect x="330" y="160" width="130" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="395" y="186" font-size="13" font-weight="bold" text-anchor="middle">informacion</text>
+    <text x="395" y="204" font-size="10" fill="#495057" text-anchor="middle">perfil médico</text>
+
+    <!-- mapa -->
+    <rect x="530" y="160" width="130" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="595" y="186" font-size="13" font-weight="bold" text-anchor="middle">mapa</text>
+    <text x="595" y="204" font-size="10" fill="#495057" text-anchor="middle">marcadores SQLite</text>
+
+    <!-- contactos -->
+    <rect x="730" y="160" width="130" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="795" y="186" font-size="13" font-weight="bold" text-anchor="middle">contactos</text>
+    <text x="795" y="204" font-size="10" fill="#495057" text-anchor="middle">RecyclerView</text>
+
+    <!-- auxilios -->
+    <rect x="330" y="280" width="130" height="52" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="395" y="310" font-size="13" font-weight="bold" text-anchor="middle">auxilios</text>
+
+    <!-- camara -->
+    <rect x="480" y="290" width="210" height="72" rx="10" fill="#fff8f0" stroke="#E67700" stroke-width="1.5"/>
+    <text x="585" y="315" font-size="12" font-weight="bold" text-anchor="middle">Cámara del sistema</text>
+    <text x="585" y="332" font-size="10" fill="#495057" text-anchor="middle">ACTION_IMAGE_CAPTURE (implícito)</text>
+    <text x="585" y="348" font-size="10" fill="#495057" text-anchor="middle">URI segura del FileProvider</text>
+
+    <!-- dialog foto -->
+    <rect x="760" y="290" width="140" height="72" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="830" y="318" font-size="11" font-weight="bold" text-anchor="middle">Dialog con foto</text>
+    <text x="830" y="336" font-size="10" fill="#495057" text-anchor="middle">al tocar marcador</text>
+    <text x="830" y="350" font-size="10" fill="#495057" text-anchor="middle">(evidencia)</text>
+
+    <!-- agregar contacto -->
+    <rect x="700" y="420" width="170" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="785" y="446" font-size="12" font-weight="bold" text-anchor="middle">agregarcontacto</text>
+    <text x="785" y="464" font-size="10" fill="#495057" text-anchor="middle">setResult + putExtra</text>
+
+    <!-- marcador telefono -->
+    <rect x="480" y="420" width="180" height="58" rx="10" fill="#fff8f0" stroke="#E67700" stroke-width="1.5"/>
+    <text x="570" y="446" font-size="12" font-weight="bold" text-anchor="middle">Marcador teléfono</text>
+    <text x="570" y="464" font-size="10" fill="#495057" text-anchor="middle">ACTION_DIAL (implícito)</text>
+
+    <!-- sensor + checkin -->
+    <rect x="60" y="420" width="190" height="58" rx="10" fill="#fff" stroke="#C92A2A" stroke-width="1.5"/>
+    <text x="155" y="446" font-size="12" font-weight="bold" text-anchor="middle">Acelerómetro</text>
+    <text x="155" y="464" font-size="10" fill="#495057" text-anchor="middle">sacudida &gt; 15</text>
+
+    <rect x="60" y="540" width="190" height="58" rx="10" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="155" y="566" font-size="12" font-weight="bold" text-anchor="middle">Check-in: ¿estás bien?</text>
+    <text x="155" y="584" font-size="10" fill="#495057" text-anchor="middle">estoy bien / necesito ayuda</text>
+
+    <rect x="60" y="650" width="190" height="52" rx="10" fill="#eaf5ec" stroke="#2B8A3E" stroke-width="1.5"/>
+    <text x="155" y="681" font-size="11" font-weight="bold" text-anchor="middle" fill="#1B7A2E">guarda en SQLite</text>
+
+    <!-- resultado guardado -->
+    <rect x="330" y="650" width="240" height="52" rx="10" fill="#eaf5ec" stroke="#2B8A3E" stroke-width="1.5"/>
+    <text x="450" y="681" font-size="11" font-weight="bold" text-anchor="middle" fill="#1B7A2E">insertarReporte() → marcador en mapa</text>
+
+    <!-- flechas explicitas (verde) desde MainActivity -->
+    <line x1="400" y1="80" x2="175" y2="158" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+    <line x1="440" y1="80" x2="405" y2="158" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+    <line x1="500" y1="80" x2="575" y2="158" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+    <line x1="530" y1="70" x2="760" y2="158" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+    <line x1="400" y1="80" x2="390" y2="278" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)" stroke-dasharray="1 0"/>
+    <text x="345" y="120" font-size="10" fill="#2B8A3E" font-weight="bold">explícitos</text>
+
+    <!-- mapa → camara (implicita) -->
+    <line x1="595" y1="218" x2="595" y2="288" stroke="#E67700" stroke-width="1.8" marker-end="url(#fN)"/>
+    <text x="603" y="258" font-size="10" fill="#E67700" font-weight="bold">Reportar + foto</text>
+
+    <!-- camara → dialog foto (resultado) -->
+    <line x1="690" y1="326" x2="758" y2="326" stroke="#E67700" stroke-width="1.8" marker-end="url(#fN)"/>
+
+    <!-- mapa → guardar -->
+    <line x1="450" y1="332" x2="435" y2="648" stroke="#2B8A3E" stroke-width="1.6" marker-end="url(#fV)"/>
+    <text x="330" y="520" font-size="10" fill="#2B8A3E">guardarReporte()</text>
+
+    <!-- contactos → agregar (explicito) -->
+    <line x1="795" y1="218" x2="795" y2="418" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+    <text x="803" y="330" font-size="10" fill="#2B8A3E" font-weight="bold">＋ agregar</text>
+
+    <!-- contactos → telefono (implicito) -->
+    <line x1="750" y1="205" x2="640" y2="418" stroke="#E67700" stroke-width="1.8" marker-end="url(#fN)"/>
+    <text x="650" y="300" font-size="10" fill="#E67700" font-weight="bold">📞 llamar</text>
+
+    <!-- agregar → vuelve a contactos -->
+    <line x1="880" y1="478" x2="880" y2="500" stroke="#2B8A3E" stroke-width="1.5" marker-end="url(#fV)"/>
+    <text x="886" y="494" font-size="9" fill="#495057">finish → onResume recarga</text>
+
+    <!-- sensor → checkin → bd -->
+    <line x1="155" y1="478" x2="155" y2="538" stroke="#C92A2A" stroke-width="1.8" marker-end="url(#fN)"/>
+    <line x1="155" y1="598" x2="155" y2="648" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+
+    <!-- bd → resultado -->
+    <line x1="250" y1="676" x2="328" y2="676" stroke="#2B8A3E" stroke-width="1.8" marker-end="url(#fV)"/>
+  </svg>
+</div>
+
+<!-- ============ 2. MODELO ENTIDAD-RELACION ============ -->
+<div class="seccion" id="mer">
+  <h1>Modelo Entidad-Relación (MER) — SQLite</h1>
+  <div class="sub">3 tablas independientes en la base de datos redsos.db · PK = llave primaria</div>
+  <svg width="920" height="820" viewBox="0 0 920 820">
+    <!-- tabla PERFIL -->
+    <rect x="40" y="20" width="260" height="330" rx="10" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="40" y="20" width="260" height="34" rx="10" fill="#212529"/>
+    <rect x="40" y="40" width="260" height="14" fill="#212529"/>
+    <text x="170" y="43" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">PERFIL</text>
+    <g font-size="11.5">
+      <text x="55" y="78" font-weight="bold" fill="#C92A2A">_ID</text><text x="230" y="78" fill="#868e96">INTEGER · PK</text>
+      <text x="55" y="100">nombre</text><text x="230" y="100" fill="#868e96">TEXT</text>
+      <text x="55" y="122">rut</text><text x="230" y="122" fill="#868e96">TEXT</text>
+      <text x="55" y="144">celular</text><text x="230" y="144" fill="#868e96">TEXT</text>
+      <text x="55" y="166">correo</text><text x="230" y="166" fill="#868e96">TEXT</text>
+      <text x="55" y="188">tipo_sangre</text><text x="230" y="188" fill="#868e96">TEXT</text>
+      <text x="55" y="210">alergias</text><text x="230" y="210" fill="#868e96">TEXT</text>
+      <text x="55" y="232">enfermedades</text><text x="230" y="232" fill="#868e96">TEXT</text>
+      <text x="55" y="254">medicamentos</text><text x="230" y="254" fill="#868e96">TEXT</text>
+      <text x="55" y="276">contacto_emergencia</text><text x="230" y="276" fill="#868e96">TEXT</text>
+      <text x="55" y="298">telefono_emergencia</text><text x="230" y="298" fill="#868e96">TEXT</text>
+      <text x="55" y="320">observaciones</text><text x="230" y="320" fill="#868e96">TEXT</text>
+      <text x="55" y="342">sincronizado</text><text x="230" y="342" fill="#868e96">INTEGER (0/1)</text>
+    </g>
+
+    <!-- tabla CONTACTOS -->
+    <rect x="330" y="20" width="260" height="180" rx="10" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="330" y="20" width="260" height="34" rx="10" fill="#2B8A3E"/>
+    <rect x="330" y="40" width="260" height="14" fill="#2B8A3E"/>
+    <text x="460" y="43" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">CONTACTOS</text>
+    <g font-size="11.5">
+      <text x="345" y="78" font-weight="bold" fill="#C92A2A">_ID</text><text x="520" y="78" fill="#868e96">INTEGER · PK AI</text>
+      <text x="345" y="100">nombre</text><text x="520" y="100" fill="#868e96">TEXT NOT NULL</text>
+      <text x="345" y="122">parentesco</text><text x="520" y="122" fill="#868e96">TEXT</text>
+      <text x="345" y="144">telefono</text><text x="520" y="144" fill="#868e96">TEXT NOT NULL</text>
+      <text x="345" y="166">latitud</text><text x="520" y="166" fill="#868e96">REAL</text>
+      <text x="345" y="188">longitud</text><text x="520" y="188" fill="#868e96">REAL</text>
+    </g>
+
+    <!-- tabla REPORTES -->
+    <rect x="620" y="20" width="260" height="230" rx="10" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="620" y="20" width="260" height="34" rx="10" fill="#C92A2A"/>
+    <rect x="620" y="40" width="260" height="14" fill="#C92A2A"/>
+    <text x="750" y="43" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">REPORTES</text>
+    <g font-size="11.5">
+      <text x="635" y="78" font-weight="bold" fill="#C92A2A">_ID</text><text x="810" y="78" fill="#868e96">INTEGER · PK AI</text>
+      <text x="635" y="100">tipo</text><text x="810" y="100" fill="#868e96">TEXT NOT NULL</text>
+      <text x="635" y="122">descripcion</text><text x="810" y="122" fill="#868e96">TEXT</text>
+      <text x="635" y="144">latitud</text><text x="810" y="144" fill="#868e96">REAL NOT NULL</text>
+      <text x="635" y="166">longitud</text><text x="810" y="166" fill="#868e96">REAL NOT NULL</text>
+      <text x="635" y="188">fecha</text><text x="810" y="188" fill="#868e96">INTEGER (ms)</text>
+      <text x="635" y="210">ruta_foto</text><text x="810" y="210" fill="#868e96">TEXT (null si no hay)</text>
+      <text x="635" y="232">sincronizado</text><text x="810" y="232" fill="#868e96">INTEGER (0/1)</text>
+    </g>
+
+    <!-- notas -->
+    <rect x="330" y="240" width="260" height="52" rx="8" fill="#eef2ff" stroke="#4263eb" stroke-width="1.2"/>
+    <text x="460" y="262" font-size="11" text-anchor="middle" fill="#364fc7">1 fila: el perfil es único</text>
+    <text x="460" y="280" font-size="11" text-anchor="middle" fill="#364fc7">(insert con CONFLICT_REPLACE)</text>
+
+    <rect x="620" y="270" width="260" height="52" rx="8" fill="#fff0f6" stroke="#c2255c" stroke-width="1.2"/>
+    <text x="750" y="292" font-size="11" text-anchor="middle" fill="#a61e4d">muchas filas: incidentes y</text>
+    <text x="750" y="310" font-size="11" text-anchor="middle" fill="#a61e4d">check-ins del sensor</text>
+
+    <!-- relaccion logica -->
+    <text x="40" y="420" font-size="13" font-weight="bold">Relación con el resto de la app</text>
+    <rect x="40" y="440" width="840" height="150" rx="10" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="60" y="470" font-size="12">· El <tspan font-weight="bold">mapa</tspan> lee REPORTES y dibuja un marcador por fila (latitud, longitud), agrupados por tipo.</text>
+    <text x="60" y="494" font-size="12">· <tspan font-weight="bold">ruta_foto</tspan> apunta a un archivo .jpg guardado en Android/data/com.example.redsos/files/Pictures/</text>
+    <text x="60" y="518" font-size="12">· La pantalla de <tspan font-weight="bold">contactos</tspan> lee CONTACTOS con un RecyclerView.</text>
+    <text x="60" y="542" font-size="12">· El campo <tspan font-weight="bold">sincronizado</tspan> marca qué filas faltan por mandar al servidor cuando haya internet.</text>
+
+    <text x="40" y="640" font-size="13" font-weight="bold">Operaciones CRUD (clase RedSOSDb)</text>
+    <rect x="40" y="660" width="200" height="130" rx="8" fill="#eaf5ec" stroke="#2B8A3E"/>
+    <text x="140" y="688" font-size="12" font-weight="bold" text-anchor="middle" fill="#1B7A2E">CREATE</text>
+    <text x="140" y="712" font-size="11" text-anchor="middle">insertarContacto()</text>
+    <text x="140" y="732" font-size="11" text-anchor="middle">guardarPerfil()</text>
+    <text x="140" y="752" font-size="11" text-anchor="middle">insertarReporte()</text>
+    <text x="140" y="780" font-size="10" text-anchor="middle" fill="#868e96">con ContentValues</text>
+
+    <rect x="260" y="660" width="200" height="130" rx="8" fill="#e7f0fb" stroke="#1864ab"/>
+    <text x="360" y="688" font-size="12" font-weight="bold" text-anchor="middle" fill="#1864ab">READ</text>
+    <text x="360" y="712" font-size="11" text-anchor="middle">obtenerTodosContactos()</text>
+    <text x="360" y="732" font-size="11" text-anchor="middle">obtenerPerfil()</text>
+    <text x="360" y="752" font-size="11" text-anchor="middle">obtenerTodosReportes()</text>
+    <text x="360" y="780" font-size="10" text-anchor="middle" fill="#868e96">con Cursor</text>
+
+    <rect x="480" y="660" width="200" height="130" rx="8" fill="#fff4e6" stroke="#E67700"/>
+    <text x="580" y="688" font-size="12" font-weight="bold" text-anchor="middle" fill="#E67700">UPDATE</text>
+    <text x="580" y="712" font-size="11" text-anchor="middle">actualizarContacto()</text>
+    <text x="580" y="732" font-size="11" text-anchor="middle">marcarContactoSincronizado()</text>
+    <text x="580" y="752" font-size="11" text-anchor="middle">marcarReporteSincronizado()</text>
+    <text x="580" y="780" font-size="10" text-anchor="middle" fill="#868e96">selectionArgs: "_ID = ?"</text>
+
+    <rect x="700" y="660" width="180" height="130" rx="8" fill="#fff0f6" stroke="#c2255c"/>
+    <text x="790" y="688" font-size="12" font-weight="bold" text-anchor="middle" fill="#c2255c">DELETE</text>
+    <text x="790" y="712" font-size="11" text-anchor="middle">eliminarContacto()</text>
+    <text x="790" y="732" font-size="11" text-anchor="middle">eliminarReporte()</text>
+    <text x="790" y="760" font-size="10" text-anchor="middle" fill="#868e96">selectionArgs: "_ID = ?"</text>
+  </svg>
+</div>
+
+<!-- ============ 3. DIAGRAMA UML ============ -->
+<div class="seccion" id="uml">
+  <h1>Diagrama de Clases UML</h1>
+  <div class="sub">Estructura principal de RedSOS</div>
+  <svg width="920" height="840" viewBox="0 0 920 840">
+    <!-- MainActivity -->
+    <rect x="40" y="20" width="270" height="240" rx="8" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="40" y="20" width="270" height="30" rx="8" fill="#212529"/>
+    <text x="175" y="41" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">MainActivity</text>
+    <text x="52" y="72" font-size="11">- db: RedSOSDb</text>
+    <text x="52" y="92" font-size="11">- mapaHome: GoogleMap</text>
+    <text x="52" y="112" font-size="11">- sensorManager: SensorManager</text>
+    <text x="52" y="132" font-size="11">- acelerometro: Sensor</text>
+    <line x1="52" y1="144" x2="298" y2="144" stroke="#dee2e6"/>
+    <text x="52" y="164" font-size="11">+ onCreate()</text>
+    <text x="52" y="184" font-size="11">+ onMapReady() · OnMapReadyCallback</text>
+    <text x="52" y="204" font-size="11">+ onSensorChanged() · SensorEventListener</text>
+    <text x="52" y="224" font-size="11">- mostrarCheckIn()</text>
+    <text x="52" y="244" font-size="11">- guardarCheckIn(estado: String)</text>
+
+    <!-- mapa -->
+    <rect x="40" y="300" width="270" height="180" rx="8" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="40" y="300" width="270" height="30" rx="8" fill="#212529"/>
+    <text x="175" y="321" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">mapa</text>
+    <text x="52" y="352" font-size="11">- tipoPendiente: String</text>
+    <text x="52" y="372" font-size="11">- rutaFotoPendiente: String</text>
+    <line x1="52" y1="384" x2="298" y2="384" stroke="#dee2e6"/>
+    <text x="52" y="404" font-size="11">+ onMapReady()</text>
+    <text x="52" y="424" font-size="11">- tomarFoto()  → FileProvider URI</text>
+    <text x="52" y="444" font-size="11">- onActivityResult()</text>
+    <text x="52" y="464" font-size="11">- mostrarFoto(ruta, titulo)</text>
+
+    <!-- contactos -->
+    <rect x="40" y="520" width="270" height="140" rx="8" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="40" y="520" width="270" height="30" rx="8" fill="#212529"/>
+    <text x="175" y="541" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">contactos</text>
+    <line x1="52" y1="564" x2="298" y2="564" stroke="#dee2e6"/>
+    <text x="52" y="588" font-size="11">+ onLlamar(telefono) → ACTION_DIAL</text>
+    <text x="52" y="608" font-size="11">+ onEliminar(id, posicion)</text>
+    <text x="52" y="628" font-size="11">- cargarContactos()  (executor)</text>
+    <text x="52" y="648" font-size="11">implementa OnContactoClickListener</text>
+
+    <!-- informacion -->
+    <rect x="40" y="700" width="270" height="120" rx="8" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="40" y="700" width="270" height="30" rx="8" fill="#212529"/>
+    <text x="175" y="721" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">informacion</text>
+    <line x1="52" y1="744" x2="298" y2="744" stroke="#dee2e6"/>
+    <text x="52" y="768" font-size="11">- guardarPerfil() (executor)</text>
+    <text x="52" y="788" font-size="11">- cargarDatosGuardados()</text>
+    <text x="52" y="808" font-size="11">FLAG_SECURE activo</text>
+
+    <!-- RedSOSDb -->
+    <rect x="380" y="120" width="280" height="300" rx="8" fill="#eaf5ec" stroke="#2B8A3E" stroke-width="2"/>
+    <rect x="380" y="120" width="280" height="30" rx="8" fill="#2B8A3E"/>
+    <text x="520" y="141" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">RedSOSDb</text>
+    <text x="392" y="172" font-size="11">- helper: RedSOSDbHelper</text>
+    <line x1="392" y1="184" x2="648" y2="184" stroke="#bde3c3"/>
+    <text x="392" y="204" font-size="11">+ insertarContacto(...) : long</text>
+    <text x="392" y="224" font-size="11">+ obtenerTodosContactos() : List</text>
+    <text x="392" y="244" font-size="11">+ actualizarContacto(...) : int</text>
+    <text x="392" y="264" font-size="11">+ eliminarContacto(id) : int</text>
+    <text x="392" y="284" font-size="11">+ guardarPerfil(...)</text>
+    <text x="392" y="304" font-size="11">+ obtenerPerfil() : String[]</text>
+    <text x="392" y="324" font-size="11">+ insertarReporte(..., rutaFoto)</text>
+    <text x="392" y="344" font-size="11">+ obtenerTodosReportes() : List</text>
+    <text x="392" y="364" font-size="11">+ eliminarReporte(id) : int</text>
+    <text x="392" y="390" font-size="10" fill="#868e96">CRUD con ContentValues + Cursor</text>
+    <text x="392" y="408" font-size="10" fill="#868e96">consultas con selectionArgs</text>
+
+    <!-- RedSOSDbHelper -->
+    <rect x="700" y="120" width="200" height="130" rx="8" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="700" y="120" width="200" height="30" rx="8" fill="#495057"/>
+    <text x="800" y="141" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle">RedSOSDbHelper</text>
+    <text x="712" y="172" font-size="11">- NOMBRE_DB, VERSION</text>
+    <line x1="712" y1="184" x2="888" y2="184" stroke="#dee2e6"/>
+    <text x="712" y="204" font-size="11">+ onCreate(db)</text>
+    <text x="712" y="224" font-size="11">+ onUpgrade(db, old, new)</text>
+    <text x="712" y="244" font-size="10" fill="#868e96">SQLiteOpenHelper (singleton)</text>
+
+    <!-- Contrato -->
+    <rect x="700" y="290" width="200" height="130" rx="8" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="700" y="290" width="200" height="30" rx="8" fill="#495057"/>
+    <text x="800" y="311" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle">ContratoRedSOS</text>
+    <text x="712" y="342" font-size="11">+ TablaPerfil</text>
+    <text x="712" y="362" font-size="11">+ TablaContactos</text>
+    <text x="712" y="382" font-size="11">+ TablaReportes</text>
+    <text x="712" y="406" font-size="10" fill="#868e96">nombres de tablas y columnas</text>
+
+    <!-- ContactoAdapter -->
+    <rect x="380" y="470" width="280" height="150" rx="8" fill="#fff" stroke="#212529" stroke-width="2"/>
+    <rect x="380" y="470" width="280" height="30" rx="8" fill="#495057"/>
+    <text x="520" y="491" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle">ContactoAdapter</text>
+    <text x="392" y="522" font-size="11">- contactos: List&lt;String[]&gt;</text>
+    <line x1="392" y1="534" x2="648" y2="534" stroke="#dee2e6"/>
+    <text x="392" y="554" font-size="11">+ actualizar(lista)</text>
+    <text x="392" y="574" font-size="11">+ onCreateViewHolder()</text>
+    <text x="392" y="594" font-size="11">+ onBindViewHolder()</text>
+    <text x="392" y="614" font-size="10" fill="#868e96">RecyclerView.Adapter&lt;ViewHolder&gt;</text>
+
+    <!-- MiUbicacion -->
+    <rect x="700" y="470" width="200" height="150" rx="8" fill="#e7f0fb" stroke="#1864ab" stroke-width="2"/>
+    <rect x="700" y="470" width="200" height="30" rx="8" fill="#1864ab"/>
+    <text x="800" y="491" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle">MiUbicacion</text>
+    <text x="712" y="522" font-size="11">+ IQUIQUE : LatLng</text>
+    <line x1="712" y1="534" x2="888" y2="534" stroke="#dbe8fa"/>
+    <text x="712" y="554" font-size="11">+ obtener(ctx, cb)</text>
+    <text x="712" y="574" font-size="11">+ tienePermiso(ctx) : boolean</text>
+    <text x="712" y="594" font-size="11">+ cancelar()</text>
+    <text x="712" y="614" font-size="10" fill="#868e96">FusedLocationProviderClient</text>
+
+    <!-- relaciones -->
+    <line x1="310" y1="140" x2="378" y2="190" stroke="#495057" stroke-width="1.6" marker-end="url(#fV)"/>
+    <text x="318" y="152" font-size="10" fill="#495057">usa</text>
+    <line x1="310" y1="390" x2="378" y2="300" stroke="#495057" stroke-width="1.6"/>
+    <line x1="310" y1="590" x2="378" y2="360" stroke="#495057" stroke-width="1.6"/>
+    <line x1="310" y1="760" x2="378" y2="420" stroke="#495057" stroke-width="1.6"/>
+    <line x1="660" y1="185" x2="698" y2="185" stroke="#495057" stroke-width="1.6"/>
+    <text x="665" y="177" font-size="10" fill="#495057">usa</text>
+    <line x1="800" y1="250" x2="800" y2="288" stroke="#495057" stroke-width="1.6"/>
+    <text x="807" y="274" font-size="10" fill="#495057">define</text>
+    <line x1="520" y1="470" x2="520" y2="430" stroke="#495057" stroke-width="1.2" stroke-dasharray="5 4"/>
+    <text x="527" y="455" font-size="10" fill="#495057">RecyclerView</text>
+    <line x1="660" y1="545" x2="698" y2="545" stroke="#495057" stroke-width="1.6"/>
+    <text x="663" y="537" font-size="10" fill="#495057">pide GPS</text>
+
+    <!-- flecha verde global -->
+    <defs>
+      <marker id="fV2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#495057"/></marker>
+    </defs>
+  </svg>
+</div>
+
+<!-- ============ 4. CASOS DE USO ============ -->
+<div class="seccion" id="uso">
+  <h1>Diagrama de Casos de Uso</h1>
+  <div class="sub">Actores y acciones dentro del sistema RedSOS</div>
+  <svg width="920" height="700" viewBox="0 0 920 700">
+    <defs>
+      <marker id="fU" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#495057"/></marker>
+    </defs>
+
+    <!-- limite del sistema -->
+    <rect x="300" y="30" width="590" height="640" rx="16" fill="#fbfcfe" stroke="#212529" stroke-width="1.6"/>
+    <text x="595" y="62" font-size="15" font-weight="bold" text-anchor="middle">Sistema RedSOS</text>
+
+    <!-- actor usuario -->
+    <circle cx="120" cy="180" r="22" fill="#212529"/>
+    <line x1="120" y1="202" x2="120" y2="252" stroke="#212529" stroke-width="3"/>
+    <line x1="88" y1="222" x2="152" y2="222" stroke="#212529" stroke-width="3"/>
+    <line x1="120" y1="252" x2="98" y2="300" stroke="#212529" stroke-width="3"/>
+    <line x1="120" y1="252" x2="142" y2="300" stroke="#212529" stroke-width="3"/>
+    <text x="120" y="330" font-size="14" font-weight="bold" text-anchor="middle">Usuario</text>
+
+    <!-- actor sensor -->
+    <circle cx="120" cy="450" r="22" fill="#C92A2A"/>
+    <line x1="120" y1="472" x2="120" y2="522" stroke="#C92A2A" stroke-width="3"/>
+    <line x1="88" y1="492" x2="152" y2="492" stroke="#C92A2A" stroke-width="3"/>
+    <line x1="120" y1="522" x2="98" y2="570" stroke="#C92A2A" stroke-width="3"/>
+    <line x1="120" y1="522" x2="142" y2="570" stroke="#C92A2A" stroke-width="3"/>
+    <text x="120" y="600" font-size="13" font-weight="bold" text-anchor="middle">Acelerómetro</text>
+    <text x="120" y="618" font-size="11" fill="#868e96" text-anchor="middle">(hardware)</text>
+
+    <!-- actor gps -->
+    <circle cx="120" cy="120" r="22" fill="#1864ab" transform="translate(0,-70)"/>
+    <text x="120" y="52" font-size="13" font-weight="bold" text-anchor="middle" transform="translate(0,10)">GPS</text>
+
+    <!-- casos de uso usuario -->
+    <ellipse cx="580" cy="110" rx="130" ry="32" fill="#fff" stroke="#C92A2A" stroke-width="1.6"/>
+    <text x="580" y="115" font-size="12.5" text-anchor="middle" font-weight="bold">Emitir alerta SOS</text>
+
+    <ellipse cx="580" cy="185" rx="130" ry="32" fill="#fff" stroke="#212529" stroke-width="1.4"/>
+    <text x="580" y="190" font-size="12.5" text-anchor="middle">Reportar incidente con foto</text>
+
+    <ellipse cx="580" cy="260" rx="130" ry="32" fill="#fff" stroke="#212529" stroke-width="1.4"/>
+    <text x="580" y="265" font-size="12.5" text-anchor="middle">Ver mapa de emergencias</text>
+
+    <ellipse cx="580" cy="335" rx="130" ry="32" fill="#fff" stroke="#212529" stroke-width="1.4"/>
+    <text x="580" y="340" font-size="12.5" text-anchor="middle">Gestionar contactos (CRUD)</text>
+
+    <ellipse cx="580" cy="410" rx="130" ry="32" fill="#fff" stroke="#212529" stroke-width="1.4"/>
+    <text x="580" y="415" font-size="12.5" text-anchor="middle">Llamar a contacto / emergencia</text>
+
+    <ellipse cx="580" cy="485" rx="130" ry="32" fill="#fff" stroke="#212529" stroke-width="1.4"/>
+    <text x="580" y="490" font-size="12.5" text-anchor="middle">Editar perfil con datos médicos</text>
+
+    <ellipse cx="580" cy="560" rx="130" ry="32" fill="#fff" stroke="#212529" stroke-width="1.4"/>
+    <text x="580" y="565" font-size="12.5" text-anchor="middle">Consultar guías de auxilio</text>
+
+    <!-- caso de uso del sensor -->
+    <ellipse cx="580" cy="635" rx="130" ry="32" fill="#fff" stroke="#C92A2A" stroke-width="1.6"/>
+    <text x="580" y="640" font-size="12.5" text-anchor="middle" font-weight="bold">Confirmar check-in de seguridad</text>
+
+    <!-- lineas usuario -->
+    <line x1="152" y1="200" x2="450" y2="115" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/>
+    <line x1="152" y1="215" x2="450" y2="183" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/>
+    <line x1="152" y1="230" x2="450" y2="257" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/>
+    <line x1="152" y1="245" x2="450" y2="332" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/>
+    <line x1="152" y1="260" x2="450" y2="407" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/>
+    <line x1="152" y1="275" x2="450" y2="482" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/>
+    <line x1="152" y1="290" x2="450" y2="557" stroke="#495057" stroke-width="1.4" marker-end="url(#fU)"/>
+
+    <!-- lineas sensor -->
+    <line x1="152" y1="470" x2="448" y2="628" stroke="#C92A2A" stroke-width="1.6" marker-end="url(#fU)"/>
+    <text x="260" y="565" font-size="10.5" fill="#C92A2A" font-weight="bold">detecta sacudida</text>
+  </svg>
+</div>
+
+</body>
+</html>

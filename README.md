@@ -59,6 +59,16 @@ RedSOS es una aplicación Android de emergencia. Permite reportar incidentes con
 
 ![Casos de uso](docs/casos-de-uso.png)
 
+### Diagrama de procesos
+
+Parte 1 — procesos 1 a 4 (Alerta SOS, Estoy bien, Check-in, Guardar perfil):
+
+![Procesos 1 a 4](docs/procesos-1-4.png)
+
+Parte 2 — procesos 5 a 8 (Reportar en mapa, Agregar contacto, Llamar, Ver foto):
+
+![Procesos 5 a 8](docs/procesos-5-8.png)
+
 ## Estructura del Proyecto
 
 ```

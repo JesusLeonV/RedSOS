@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1720 660" width="1720" height="660" font-family="Segoe UI, Roboto, Arial, sans-serif">
+  <defs>
+    <style>
+      .hd{fill:#37474F}
+      .tn{font-size:19px;font-weight:700;fill:#FFFFFF}
+      .ts{font-size:12px;fill:#CFD8DC}
+      .ch{fill:#ECEFF1}
+      .cht{font-size:12px;font-weight:700;fill:#455A64;letter-spacing:.5px}
+      .f{font-size:13.5px;fill:#263238}
+      .fk{font-size:13.5px;fill:#263238;font-weight:700}
+      .t{font-size:12.5px;fill:#546E7A;font-family:Consolas, 'Courier New', monospace}
+      .n{font-size:12px;fill:#616161}
+      .rl{stroke:#E0E4E7}
+      .cl{stroke:#CFD8DC}
+      .box{fill:none;stroke:#37474F;stroke-width:1.5}
+      .pk{fill:#FFB300}
+      .pkt{font-size:10px;font-weight:700;fill:#3E2723}
+    </style>
+  </defs>
+
+  <rect width="1720" height="660" fill="#FFFFFF"/>
+  <text x="40" y="46" font-size="28" font-weight="700" fill="#263238">Modelo Entidad-Relación (MER)</text>
+  <text x="40" y="74" font-size="15" fill="#616161">RedSOS — base de datos local</text>
+  <line x1="40" y1="90" x2="1680" y2="90" stroke="#CFD8DC"/>
+
+  <!-- ================= PERFIL ================= -->
+  <g transform="translate(40,115)">
+    <rect width="520" height="48" class="hd"/>
+    <text x="16" y="23" class="tn">perfil</text>
+    <rect y="48" width="520" height="28" class="ch"/>
+    <text x="46" y="67" class="cht">CAMPO</text><text x="204" y="67" class="cht">TIPO</text><text x="284" y="67" class="cht">NOTA</text>
+
+    <g transform="translate(0,76)"><rect x="12" y="7" width="26" height="16" rx="3" class="pk"/><text x="25" y="19" text-anchor="middle" class="pkt">PK</text><text x="46" y="20" class="fk">_ID</text><text x="204" y="20" class="t">INTEGER</text><text x="284" y="20" class="n">PK fija</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,106)"><text x="46" y="20" class="f">nombre</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,136)"><text x="46" y="20" class="f">rut</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,166)"><text x="46" y="20" class="f">celular</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,196)"><text x="46" y="20" class="f">correo</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,226)"><text x="46" y="20" class="f">tipo_sangre</text><text x="204" y="20" class="t">TEXT</text><text x="284" y="20" class="n">A+, O-, etc</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,256)"><text x="46" y="20" class="f">alergias</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,286)"><text x="46" y="20" class="f">enfermedades</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,316)"><text x="46" y="20" class="f">medicamentos</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,346)"><text x="46" y="20" class="f">contacto_emergencia</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,376)"><text x="46" y="20" class="f">telefono_emergencia</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,406)"><text x="46" y="20" class="f">observaciones</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,436)"><text x="46" y="20" class="f">sincronizado</text><text x="204" y="20" class="t">INTEGER</text><text x="284" y="20" class="n">0 = falta mandar al servidor</text></g>
+
+    <line x1="190" y1="48" x2="190" y2="466" class="cl"/>
+    <line x1="270" y1="48" x2="270" y2="466" class="cl"/>
+    <rect width="520" height="466" class="box"/>
+  </g>
+
+  <!-- ================= CONTACTOS ================= -->
+  <g transform="translate(600,115)">
+    <rect width="520" height="48" class="hd"/>
+    <text x="16" y="23" class="tn">contactos</text>
+    <rect y="48" width="520" height="28" class="ch"/>
+    <text x="46" y="67" class="cht">CAMPO</text><text x="204" y="67" class="cht">TIPO</text><text x="284" y="67" class="cht">NOTA</text>
+
+    <g transform="translate(0,76)"><rect x="12" y="7" width="26" height="16" rx="3" class="pk"/><text x="25" y="19" text-anchor="middle" class="pkt">PK</text><text x="46" y="20" class="fk">_ID</text><text x="204" y="20" class="t">INTEGER</text><text x="284" y="20" class="n">PK autoincremental</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,106)"><text x="46" y="20" class="f">nombre</text><text x="204" y="20" class="t">TEXT</text><text x="284" y="20" class="n">NOT NULL</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,136)"><text x="46" y="20" class="f">parentesco</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,166)"><text x="46" y="20" class="f">telefono</text><text x="204" y="20" class="t">TEXT</text><text x="284" y="20" class="n">NOT NULL</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,196)"><text x="46" y="20" class="f">latitud</text><text x="204" y="20" class="t">REAL</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,226)"><text x="46" y="20" class="f">longitud</text><text x="204" y="20" class="t">REAL</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,256)"><text x="46" y="20" class="f">sincronizado</text><text x="204" y="20" class="t">INTEGER</text></g>
+
+    <line x1="190" y1="48" x2="190" y2="286" class="cl"/>
+    <line x1="270" y1="48" x2="270" y2="286" class="cl"/>
+    <rect width="520" height="286" class="box"/>
+  </g>
+
+  <!-- ================= REPORTES ================= -->
+  <g transform="translate(1160,115)">
+    <rect width="520" height="48" class="hd"/>
+    <text x="16" y="23" class="tn">reportes</text>
+    <rect y="48" width="520" height="28" class="ch"/>
+    <text x="46" y="67" class="cht">CAMPO</text><text x="204" y="67" class="cht">TIPO</text><text x="284" y="67" class="cht">NOTA</text>
+
+    <g transform="translate(0,76)"><rect x="12" y="7" width="26" height="16" rx="3" class="pk"/><text x="25" y="19" text-anchor="middle" class="pkt">PK</text><text x="46" y="20" class="fk">_ID</text><text x="204" y="20" class="t">INTEGER</text><text x="284" y="20" class="n">PK autoincremental</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,106)"><text x="46" y="20" class="f">tipo</text><text x="204" y="20" class="t">TEXT</text><text x="284" y="19" class="n">NOT NULL</text><text x="284" y="36" class="n">(Peligro/Albergue/Agua/Ayuda/Seguro)</text><line x2="520" y1="46" y2="46" class="rl"/></g>
+    <g transform="translate(0,152)"><text x="46" y="20" class="f">descripcion</text><text x="204" y="20" class="t">TEXT</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,182)"><text x="46" y="20" class="f">latitud</text><text x="204" y="20" class="t">REAL</text><text x="284" y="20" class="n">NOT NULL</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,212)"><text x="46" y="20" class="f">longitud</text><text x="204" y="20" class="t">REAL</text><text x="284" y="20" class="n">NOT NULL</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,242)"><text x="46" y="20" class="f">fecha</text><text x="204" y="20" class="t">INTEGER</text><text x="284" y="20" class="n">fecha en milisegundos</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,272)"><text x="46" y="20" class="f">ruta_foto</text><text x="204" y="20" class="t">TEXT</text><text x="284" y="20" class="n">ruta de la evidencia (puede ser null)</text><line x2="520" y1="30" y2="30" class="rl"/></g>
+    <g transform="translate(0,302)"><text x="46" y="20" class="f">sincronizado</text><text x="204" y="20" class="t">INTEGER</text></g>
+
+    <line x1="190" y1="48" x2="190" y2="332" class="cl"/>
+    <line x1="270" y1="48" x2="270" y2="332" class="cl"/>
+    <rect width="520" height="332" class="box"/>
+  </g>
+
+  <text x="860" y="630" text-anchor="middle" font-size="14" fill="#546E7A">Las 3 tablas son independientes: no hay relaciones (claves foráneas) entre ellas.</text>
+</svg>
